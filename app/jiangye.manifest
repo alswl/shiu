@@ -1,0 +1,12 @@
+CACHE MANIFEST
+
+CACHE:
+js/jquery-1.7.2.min.js
+js/sixu.js
+style/style.css
+book/jiangye.js
+
+NETWORK:
+*
+
+# vim: set ft=conf:
