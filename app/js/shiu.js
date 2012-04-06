@@ -1,9 +1,21 @@
 jQuery.extend({
 	isIphone: function () {
-		return (navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i));
+		return (navigator.userAgent.match(/iPhone/i)) ||
+		(navigator.userAgent.match(/iPod/i)) ||
+		(navigator.userAgent.match(/iPad/i));
 	},
-})
-var app = {};
+});
+
+(function() {
+    var app = function () {};
+    app.prototype = {
+		init: function () {
+            var self = this;
+		}
+	};
+
+	window.Shiu = app;
+})();
 
 if (!$.isIphone()) {
 	$('#noiphone').show();
@@ -34,4 +46,6 @@ if (!$.isIphone()) {
             $("#download .complete").show()
         }
 	}
-}
+	else {
+	}
+};

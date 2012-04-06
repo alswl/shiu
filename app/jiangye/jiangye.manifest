@@ -4,7 +4,7 @@ CACHE MANIFEST
 
 CACHE:
 ../js/jquery-1.7.2.min.js
-#../js/sixu.js
+#../js/shiu.js
 #../style/style.css
 book.js
 

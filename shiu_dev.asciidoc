@@ -1,4 +1,4 @@
-= Sixu 开发记录 =
+= Shiu 开发记录 =
 
 :author: alswl
 :email: alswlx@gmail.com

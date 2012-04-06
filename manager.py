@@ -1,7 +1,7 @@
 #!/usr/bin/python2
 # coding=utf-8
 # author: alswl<alswlx@gmail.com>
-# web site: https://github.com/alswl/sixu
+# web site: https://github.com/alswl/shiu
 
 import os
 import argparse
@@ -75,7 +75,7 @@ def parse_chapter(txt):
 
 def main():
     parser = argparse.ArgumentParser(
-        description='manager of Sixu'
+        description='manager of Shiu'
         )
     parser.add_argument('--serve', '-s',
                         action='store_true',
