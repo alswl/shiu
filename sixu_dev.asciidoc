@@ -53,3 +53,19 @@ http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web 
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
 * format-detection 自动检查特定格式，比如电话号码
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
+
+== 开发工具 ==
+
+=== manager.py ===
+
+受 Django / RoR 启发，我写了一个 Python 脚本 manager.py 用来管理项目，
+功能包括：启动一个静态服务器 / 转换图书格式。
+
+运行 `./manager.py -s <PORT>` 运行静态服务器，默认端口是9999。
+运行 `./manager.py --parse-txt ./book/src/jiangye/* --parse-txt-output ./book/jiangye.js`
+来转换文本格式。
+运行 `./manager.py --help` 可以查看到帮助。
+
+=== 调试工具 ===
+
+Chrome 隐身模式。
