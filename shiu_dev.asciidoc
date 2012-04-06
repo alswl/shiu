@@ -62,6 +62,22 @@ appCache.onprogress = function (e) {
 * http://handyxuefeng.blog.163.com/blog/static/45452172201111414317216/[初探--HTML5离线存储]
 * http://www.w3.org/TR/2011/WD-html5-20110525/offline.html[W3C - 5.6 Offline Web applications]
 
+=== 页面排版 ===
+
+Dom 切换 vs 多栏
+
+* http://jsbin.com/ewozip/2/[Demo]
+
+== JS ==
+
+=== 结构设计 ===
+
+参考孙峻文同学的 Behind Tetris5 系列
+
+* http://sunblog.72pines.com/behindtetris5-basic/
+* http://sunblog.72pines.com/behindtetris5-gamecore/
+* http://sunblog.72pines.com/behindtetris5-gameui/
+
 == 开发工具 ==
 
 === manager.py ===
@@ -79,3 +95,9 @@ appCache.onprogress = function (e) {
 Chrome 隐身模式。
 
 Chorme Console
+
+=== Github ===
+
+绑定自定义域名 `http://shiu.log4d.com` 。
+
+* http://help.github.com/pages/[GitHub Pages]

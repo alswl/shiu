@@ -17,6 +17,17 @@ jQuery.extend({
 	window.Shiu = app;
 })();
 
+(function() {
+	var chapter = function () {
+		var self = this;
+	};
+    chapter.prototype = {
+        init: function (j, e, l) {
+		},
+	};
+	window.Chapter = chapter;
+})();
+
 if (!$.isIphone()) {
 	$('#noiphone').show();
 } else {
