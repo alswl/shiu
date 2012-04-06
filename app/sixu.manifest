@@ -1,0 +1,11 @@
+CACHE MANIFEST
+
+CACHE:
+js/jquery.mobile-1.0.1.min.js
+js/sixu.js
+style/style.css
+
+NETWORK:
+*
+
+# vim: set ft=conf:
