@@ -3,6 +3,7 @@
 # author: alswl<alswlx@gmail.com>
 # web site: https://github.com/alswl/sixu
 
+import os
 import argparse
 import SimpleHTTPServer
 import BaseHTTPServer
@@ -34,6 +35,7 @@ def serve(port):
                     mimetype = 'text/cache-manifest'
             return mimetype
 
+    os.chdir(os.path.join(os.path.dirname(__file__), './app/'))
     if not isinstance(port, int):
         port = 9999
     httpd = BaseHTTPServer.HTTPServer(("", port), MyHandler)
@@ -66,7 +68,7 @@ def parse_chapter(txt):
     l = filter(lambda x: len(x.strip()) > 0, l)
     try:
         title = l[0]
-        contents = reduce(lambda x, y: x + y, l[1:])
+        contents = reduce(lambda x, y: x + r'\r' + y, l[1:])
     except IndexError:
         raise ValueError # TODO add
     return (title, contents)
