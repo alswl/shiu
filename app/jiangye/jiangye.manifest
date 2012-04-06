@@ -1,5 +1,7 @@
 CACHE MANIFEST
 
+version 1706
+
 CACHE:
 ../js/jquery-1.7.2.min.js
 #../js/sixu.js

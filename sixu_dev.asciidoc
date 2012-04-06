@@ -7,7 +7,7 @@
 
 == 缘由 ==
 
-== 结构 ==
+== 项目结构 ==
 
 == Html5 ==
 
@@ -15,32 +15,12 @@
 
 Manifest 文件是用来配置需要缓存的或者一定要保持联网缓存的配置文件。
 
+记得加上 `version` 来手动控制文件的更新。
+
 ----
-var cache = window.applicationCache; //当前文档的ApplicationCache对象
-var cache = var cache = self.applicationCache; //当前worker的ApplicationCache对象
-/*
-* 属性,返回当前离线应用的状态
-* UNCACHED (数值0)：未启用离线应用
-* IDLE (数值1)：已开启离线应用，但本地缓存的资源是最新的，并且未标记为废弃资源
-* CHECKING (数值2)：当前更新缓存的状态为“检查中”
-* DOWNLOADING (数值3)：当前更新缓存的状态为“下载资源中”
-* UPDATEREADY (数值4)：当前更新缓存的状态为“更新完毕”
-* OBSOLETE (数值5)：已开启离线应用，但缓存资源都已标记为废弃
-*/
-cache.status
-/*
-* 方法,下载资源到本地
-* 如果没有cache需要更新，则抛出 INVALID_STATE_ERR 异常
-*/
-cache.update();
-/*
-* 方法,更新缓存到最新的资源
-* 如果没有新的资源，则抛出INVALID_STATE_ERR异常
-* 并不会使本次加载的页面立即重新加载资源，仅有在执行该方法后刷新页面才能看到最新的资源。
-*/
-cache.swapCache();
 ----
 
+* http://diveintohtml5.info/offline.html[Let’s Take This Offline]
 * http://www.mhtml5.com/resources/html5-js-api-教程（四）-离线应用[HTML5 JS API 教程（四） 离线应用]
 * http://developer.51cto.com/art/201009/227513.htm[HTML 5缓存机制：Cache Manifest配置实例]
 * http://www.w3schools.com/html5/att_html_manifest.asp[HTML5 <html> manifest Attribute]
@@ -50,9 +30,37 @@ cache.swapCache();
 * viewport：设定移动设备视角，包括宽度、缩放、是否允许缩放
 http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web part 1)]
 * apple-mobile-web-app-capable：iOS 特有标签，表示使用全屏视图
-http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
 * format-detection 自动检查特定格式，比如电话号码
+* apple-mobile-web-app-status-bar-style 设定系统状态栏风格
+* iOS 特有标签查看
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
+
+=== window.navigator.standalone ===
+
+检测 Web 页面 的 iPhone App 状态。
+
+* http://www.bennadel.com/blog/1950-Detecting-iPhone-s-App-Mode-Full-Screen-Mode-For-Web-Applications.htm[Detecting iPhone's App Mode (Full Screen Mode) For Web Applications]
+
+=== app cache 事件 ===
+
+----
+var appCache = window.applicationCache;
+appCache.ondownloading = function () {
+	window.progresscount = 0
+};
+appCache.onprogress = function (e) {
+	var percent = "";
+	if (e && e.lengthComputable) {
+		percent = " " + Math.round(100 * e.loaded / e.total) + "%"
+	} else {
+		percent = Math.round(100 * (++progresscount / 8)) + "%"
+	}
+	$("#download .percent").text(percent);
+};
+----
+
+* http://handyxuefeng.blog.163.com/blog/static/45452172201111414317216/[初探--HTML5离线存储]
+* http://www.w3.org/TR/2011/WD-html5-20110525/offline.html[W3C - 5.6 Offline Web applications]
 
 == 开发工具 ==
 
@@ -69,3 +77,5 @@ http://developer.apple.com/library/safari/#documentation/appleapplications/refer
 === 调试工具 ===
 
 Chrome 隐身模式。
+
+Chorme Console

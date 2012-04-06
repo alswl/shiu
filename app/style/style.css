@@ -67,23 +67,33 @@ body {
 	padding: 0;
 	width: 320px;
 }
+footer {
+	width: 100%;
+	text-align: center;
+	color: #333;
+	font-size: 0.8em;
+}
 
 #hero_unit {
     height: 420px;
     padding: 20px 0;
-    position: absolute;
     width: 100%;
 	text-align: center;
 }
 #hero_unit .logo{
-	/*background: url("../image/logo.png") no-repeat scroll 0 0 transparent;*/
-	/*height: 48px;*/
+	background: url("../image/logo.png") no-repeat scroll 0 0 transparent;
+	height: 128px;
 	margin: 0 auto;
-	/*width: 48px;*/
+	width: 128px;
+	text-indent: -99999px;
 }
 #hero_unit .book_name {
 }
 #hero_unit .book_desc {
 	color: #333;
 	font-size: 0.8em;
+}
+#hero_unit li {
+	list-style: disc inside none;
+	margin-left: -2em;
 }

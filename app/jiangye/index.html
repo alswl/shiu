@@ -3,18 +3,22 @@
 <head>
 <title>将夜 - Sixu</title>
 <meta charset="utf-8">
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
 <meta name="format-detection" content="telephone=no">
+
+<link href="../image/jiangye_cover.jpg" rel="apple-touch-startup-image">
+<link href="../image/apple_touch_icon.png" rel="apple-touch-icon-precomposed">
+
+<link rel="shortcut icon" href="../favicon.ico" />
 <link rel="stylesheet" type="text/css" href="../style/style.css" />
-<style type="text/css">
-</style>
+<style type="text/css"></style>
 </head>
 <body>
 <div id="hero_unit">
-	<div class="logo">Sixu</div>
-	<div class="book_cover">将夜</div>
+	<img class="book_cover" height="128px" src="../image/jiangye_cover.jpg" alt="将夜"/>
 	<h1 class="book_name">将夜</h1>
 	<section class="book_desc">
 		<p>一段可歌可泣可笑可爱的草根崛起史。</p>
@@ -22,10 +26,11 @@
 		<p>书院后山里永恒回荡着他疑惑的声音：</p>
 		<p>宁可永劫受沉沦，不从诸圣求解脱？ </p>
 		<p>……</p>
+		<p>……</p>
 	</section>
 	<div id="download" class ="hidden">
 		<div class="process">
-			下载中... (<strong class="percent">0%</strong>)
+			<strong><span class="tip">下载中</span>... (<span class="percent">0</span>%)</strong>
 			<div class="complete hidden">
 				<p>请点击屏幕下方工具栏中间按钮</p>	
 				<p>选择“<strong>添加到主屏幕</strong>”即可成完下载</p>	
@@ -35,6 +40,10 @@
 	<div id="noiphone" class="hidden">请在iPhone/iPod Touch打开</div>
 </div>
 
+<div id="rotation_error" class="hidden"></div>
+<div id="loading" class="hidden">加载中…</div>
+<div id="main">
+</div>
 
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 <script type="text/javascript" src="../js/sixu.js"></script>
