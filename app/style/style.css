@@ -1,0 +1,89 @@
+/*通用类定义*/
+.clearfix:after {
+	clear: both;
+	content: ".";
+	display: block;
+	height: 0;
+	visibility: hidden;
+}
+.clearfix {
+	display: inline-block;
+}
+* html .clearfix {
+	height: 1%;
+}
+.clearfix {
+	display: block;
+}
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}
+.hidden {
+	display: none;
+}
+.cb {
+	clear: both;
+}
+.cl {
+	clear: left;
+}
+.cr {
+	clear: right;
+}
+.tl {
+	text-align: left;
+}
+.tr {
+	text-align: right;
+}
+.tc {
+	text-align: center;
+}
+.vm {
+	vertical-align: middle;
+}
+.pr {
+	position: relative;
+}
+.pa {
+	position: absolute;
+}
+.fn {
+	font-weight: normal;
+}
+.fb {
+	font-weight: bold;
+}
+
+body {
+	background: url("../image/bg.png") repeat scroll 0 0 transparent;
+	font-family: 'Helvetica Neue', Helvetica,Arial;
+	height: 460px;
+	margin: 0;
+	overflow: hidden;
+	padding: 0;
+	width: 320px;
+}
+
+#hero_unit {
+    height: 420px;
+    padding: 20px 0;
+    position: absolute;
+    width: 100%;
+	text-align: center;
+}
+#hero_unit .logo{
+	/*background: url("../image/logo.png") no-repeat scroll 0 0 transparent;*/
+	/*height: 48px;*/
+	margin: 0 auto;
+	/*width: 48px;*/
+}
+#hero_unit .book_name {
+}
+#hero_unit .book_desc {
+	color: #333;
+	font-size: 0.8em;
+}
