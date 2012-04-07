@@ -1,33 +1,3 @@
-jQuery.extend({
-	isIphone: function () {
-		return (navigator.userAgent.match(/iPhone/i)) ||
-		(navigator.userAgent.match(/iPod/i)) ||
-		(navigator.userAgent.match(/iPad/i));
-	},
-});
-
-(function() {
-    var app = function () {};
-    app.prototype = {
-		init: function () {
-            var self = this;
-		}
-	};
-
-	window.Shiu = app;
-})();
-
-(function() {
-	var chapter = function () {
-		var self = this;
-	};
-    chapter.prototype = {
-        init: function (j, e, l) {
-		},
-	};
-	window.Chapter = chapter;
-})();
-
 if (!$.isIphone()) {
 	$('#noiphone').show();
 } else {
