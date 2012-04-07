@@ -81,7 +81,7 @@ def main():
                         action='store_true',
                         help='run static server')
     parser.add_argument('--port', '-p',
-                        type=str,
+                        type=int,
                         help='static server port, default is 9999')
     parser.add_argument('--parse-txt',
                         type=argparse.FileType('r'),
