@@ -1,7 +1,7 @@
 if (!$.isIphone()) {
 	$('#noiphone').show();
 } else {
-    if (!window.navigator.standalone) {
+    if (!window.navigator.standalone) { // 以浏览器打开
 		$('#download').show();
 		var appCache = window.applicationCache;
 		appCache.ondownloading = function () {
@@ -27,6 +27,12 @@ if (!$.isIphone()) {
             $("#download .complete").show()
         }
 	}
-	else {
+	else { // 以独立应用打开
+		$('#hero_unit').hide();
+		$('#main').show();
+		App.init();
+		App.run();
 	}
+	App.init(); // TODO DEBUG
+	App.run();
 };

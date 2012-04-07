@@ -64,7 +64,7 @@ appCache.onprogress = function (e) {
 
 === 页面排版 ===
 
-Dom 切换 vs 多栏
+Dom 切换 vs 多栏 `-webkit-column-width`
 
 * http://jsbin.com/ewozip/2/[Demo]
 

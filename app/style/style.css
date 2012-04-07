@@ -158,3 +158,32 @@ footer {
 	list-style: disc inside none;
 	margin-left: -2em;
 }
+
+#main {
+	height: 460px;
+	width: 320px;
+}
+#indexs {
+	height: 460px;
+	width: 320px;
+	z-index: 200;
+}
+#content {
+	height: 460px;
+	z-index: 100;
+}
+#content .chapter h2 {
+	text-align: center;
+	font-size: 1.4em;
+}
+#content .chapter {
+    height: 440px;
+    position: absolute;
+	padding: 8px;
+    -moz-column-width: 320px;
+    -webkit-column-width: 320px;
+}
+#content p {
+	font-size: 1.2em;
+	text-indent: 2em;
+}

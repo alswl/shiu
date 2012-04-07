@@ -1,5 +1,5 @@
 (function() {
-	var AppUi {
+	var AppUi = {
         init: function () {
 		},
 	};
