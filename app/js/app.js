@@ -2,7 +2,8 @@
 	var App = {
 		// constants
 		ui: AppUi,
-		currentPage: null,
+		currentPage: null, // 当前页码
+		pageCount: null, // 章总页码
 
 		// constructor
         init: function () {
@@ -52,13 +53,24 @@
 				self.chapters.push(chapter);
 			}
 			self.ui.setChapter(self.chapters[0].get$());
+			self.pageCount = self.ui.getPageCount();
 		},
 
+		// 上一页
+		prePage: function() {
+			var self = this;
+			if (self.currentPage > 1) {
+				self.currentPage -= 1;
+				self.ui.setPage(self.currentPage);
+			}
+		},
 		// 下一页
 		nextPage: function() {
 			var self = this;
-			self.currentPage += 1;
-			self.ui.setPage(self.currentPage);
+			if (self.currentPage < self.pageCount) {
+				self.currentPage += 1;
+				self.ui.setPage(self.currentPage);
+			}
 		},
 	};
 

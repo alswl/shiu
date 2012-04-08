@@ -67,6 +67,11 @@ appCache.onprogress = function (e) {
 Dom 切换 vs 多栏 `-webkit-column-width`
 
 * http://jsbin.com/ewozip/2/[多栏 Demo]
+* http://kmsm.ca/2010/an-almost-complete-guide-to-css3-multi-column-layouts/[An (Almost) Complete Guide to CSS3 Multi-column Layouts]
+
+获取分栏之后的栏位数目 `$('#content chapter > :last'.potion()` )。
+
+* http://stackoverflow.com/questions/8354786/determine-the-width-of-a-dynamic-css3-multicolumn-div-width-fixed-column-width[Determine the Width of a dynamic CSS3 Multicolumn DIV width fixed column-width]
 
 == JS ==
 

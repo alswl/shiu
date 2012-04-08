@@ -60,10 +60,14 @@
 		// 书籍内容页面单击事件
 		bindChapterClick: function() {
 			var self = this;
-			self.$content.delegate('#content .chapter', 'click', function(e){
+			self.$content.click(function(e){
 				var x = e.clientX;
 				var y = e.clientY;
-				self.app.nextPage();
+				if (x < 100) {
+					self.app.prePage();
+				} else if (x > 220) {
+					self.app.nextPage();
+				}
 			});
 		},
 
@@ -90,6 +94,11 @@
 			this.$content.html(html);
 			this.$chapter = $(this.CHAPTER_SELECTOR);
 		},
+
+		// 获取章节总页码 // TODO： 将排版工作放到 JSON 中完成
+		getPageCount: function() {
+			return $('.chapter > *:last').position().left / this.SCREEN_WIDTH;
+		}
 	};
 
 	window.AppUi = AppUi;
