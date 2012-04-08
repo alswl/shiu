@@ -188,6 +188,8 @@ footer {
     -webkit-column-width: 320px;
     -webkit-column-gap: 12px;
 	-webkit-column-count: auto;
+	-moz-transition: left 200ms;
+	-webkit-transition: left 200ms;
 }
 #content .chapter * {
 	width: 304px;

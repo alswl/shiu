@@ -35,6 +35,8 @@ http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web 
 * iOS 特有标签查看
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
 
+`apple-mobile-web-app-capable` 模式下的点击阴影
+
 === window.navigator.standalone ===
 
 检测 Web 页面 的 iPhone App 状态。
@@ -72,6 +74,12 @@ Dom 切换 vs 多栏 `-webkit-column-width`
 获取分栏之后的栏位数目 `$('#content chapter > :last'.potion()` )。
 
 * http://stackoverflow.com/questions/8354786/determine-the-width-of-a-dynamic-css3-multicolumn-div-width-fixed-column-width[Determine the Width of a dynamic CSS3 Multicolumn DIV width fixed column-width]
+
+=== 动画切换 ===
+
+jQuery 实现 `jQuery.animate({'left': left}, 200)`
+
+CSS3 实现 `-moz-transition: left 201ms;`
 
 == JS ==
 

@@ -84,6 +84,7 @@
 			if ($.browser.webkit) { // firefox for develop
 				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
 			}
+			//self.$chapter.css('-webkit-transition', 'left 1s'
 			self.$chapter.css('left', left + 'px');
 		},
 
