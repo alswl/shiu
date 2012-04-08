@@ -179,9 +179,13 @@ footer {
 #content .chapter {
     height: 440px;
     position: absolute;
+	left: 0px;
+	width: 314px;
 	padding: 8px;
     -moz-column-width: 320px;
+    -moz-column-gap: 12px;
     -webkit-column-width: 320px;
+    -webkit-column-gap: 12px;
 }
 #content p {
 	font-size: 1.2em;

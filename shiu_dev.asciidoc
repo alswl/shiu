@@ -66,17 +66,32 @@ appCache.onprogress = function (e) {
 
 Dom 切换 vs 多栏 `-webkit-column-width`
 
-* http://jsbin.com/ewozip/2/[Demo]
+* http://jsbin.com/ewozip/2/[多栏 Demo]
 
 == JS ==
 
 === 结构设计 ===
+
+MCRV 结构设计。
+
+* http://www.baiduux.com/blog/2011/07/08/frontend-mcrv-design-pattern/[前端开发中的MCRV模式]
 
 参考孙峻文同学的 Behind Tetris5 系列
 
 * http://sunblog.72pines.com/behindtetris5-basic/
 * http://sunblog.72pines.com/behindtetris5-gamecore/
 * http://sunblog.72pines.com/behindtetris5-gameui/
+
+=== 触摸事件 ===
+
+阻止滚动：
+
+----
+http://127.0.0.1:9999/jiangye/
+----
+
+* https://developer.apple.com/library/safari/#documentation/UserExperience/Reference/TouchEventClassReference/TouchEvent/TouchEvent.html[Apple TouchEvent Class Reference]
+* http://select.yeeyan.org/view/213582/202991[针对多点触控浏览器进行的开发]
 
 == 开发工具 ==
 
@@ -95,6 +110,11 @@ Dom 切换 vs 多栏 `-webkit-column-width`
 Chrome 隐身模式。
 
 Chorme Console
+
+iPhone Safari 调试控制台
+
+https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
+桌面下模拟点击的 jQuery 插件
 
 === Github ===
 
