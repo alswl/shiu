@@ -4,7 +4,7 @@
 		$content: $('#content'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
-		SCREEN_WIDTH: 314,
+		SCREEN_WIDTH: 320,
 		SCREEN_PADDING: 8,
 		SCREEN_COLUMN_GAP: 12,
 

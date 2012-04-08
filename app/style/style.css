@@ -173,19 +173,22 @@ footer {
 	z-index: 100;
 }
 #content .chapter h2 {
-	text-align: center;
+	text-align: justify;
 	font-size: 1.4em;
 }
 #content .chapter {
     height: 440px;
     position: absolute;
 	left: 0px;
-	width: 314px;
-	padding: 8px;
+	/*width: 304px;*/
     -moz-column-width: 320px;
     -moz-column-gap: 12px;
     -webkit-column-width: 320px;
     -webkit-column-gap: 12px;
+}
+#content .chapter * {
+	width: 304px;
+	margin: 0 8px;
 }
 #content p {
 	font-size: 1.2em;
