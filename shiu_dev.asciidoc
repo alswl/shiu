@@ -46,6 +46,17 @@ http://developer.apple.com/library/safari/#documentation/appleapplications/refer
 
 * http://www.bennadel.com/blog/1950-Detecting-iPhone-s-App-Mode-Full-Screen-Mode-For-Web-Applications.htm[Detecting iPhone's App Mode (Full Screen Mode) For Web Applications]
 
+=== 本地存储 ===
+
+* Manifest
+* Web SQL Database
+* LocalStorage 5M -> 10M http://stackoverflow.com/a/1923384/342757[Limit of localstorage on iPhone?]
+* indexedDB
+
+iOS 5 localStorage 限制 10M
+
+* 
+
 === app cache 事件 ===
 
 ----

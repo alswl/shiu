@@ -45,6 +45,7 @@
 
 		// 缓存事件绑定
 		cacheOnProgress: function(e) {
+			var self = this;
 			var percent = "";
 			if (e && e.lengthComputable) {
 				percent = Math.round(100 * e.loaded / e.total)
@@ -55,12 +56,14 @@
 		},
 
 		cacheOnCached: function(e) {
+			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show()
 		},
 
 		cacheOnUpdate: function() {
+			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show()

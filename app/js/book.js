@@ -16,12 +16,12 @@
 
 		// 页码保存到本地
 		setCurrentPage: function(page) {
-			db.set(self.title + 'currentPage', page);
+			db.set(self.title + '_currentPage', page);
 		},
 
 		// 从本地获取页码
 		getCurrentPage: function() {
-			var page = db.get(self.title + 'currentPage');
+			var page = db.get(self.title + '_currentPage');
 			if (page === null) {
 				page = 0;
 			}
@@ -30,20 +30,20 @@
 
 		// 总页数保存到本地
 		setPageCount: function(page) {
-			db.set(self.title + 'pageCount', page);
+			db.set(self.title + '_pageCount', page);
 		},
 
 		// 从本地获取总页码
 		getPageCount: function() {
-			return db.get(self.title + 'pageCount');
+			return db.get(self.title + '_pageCount');
 		},
 
 		// 章节
 		setCurrentChapterIndex: function(index) {
-			db.set(self.title + 'currentChapterIndex', index);
+			db.set(self.title + '_currentChapterIndex', index);
 		},
 		getCurrentChapterIndex: function() {
-			index = db.get(self.title + 'currentChapterIndex');
+			index = db.get(self.title + '_currentChapterIndex');
 			if (index === null) {
 				index = 0;
 			}
