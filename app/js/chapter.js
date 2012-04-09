@@ -21,11 +21,18 @@
 				for (var i = 0; i < self.content.split('\r').length; i++) {
 					contentHtml += '<p>' + self.content.split('\r')[i] + '</p>\n';
 				}
-				self.$ = self.$Template.replace('{title}', self.title).replace('{contents}', contentHtml);
+				self.$ = self.$Template.replace('{title}', self.getCnIndex()).replace('{contents}', contentHtml);
 			}
 			return self.$;
 		},
-		click: function() {
+
+		// 获取中文的「第 N 章」
+		getCnIndex: function() {
+			var cnNumArr = "一二三四五六七八九十";
+			var cnNum = (self.index >= 20 ? cnNumArr.charAt(parseInt(self.index / 10) - 1) : "")
+				+ (self.index >= 10 ? cnNumArr.charAt(9) : "")
+				+ (self.index % 10 == 0 ? "" : cnNumArr.charAt(self.index % 10 - 1));
+			return "第" + cnNum + "章 ";
 		}
 	};
 	window.Chapter = Chapter;

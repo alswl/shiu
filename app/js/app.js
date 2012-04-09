@@ -2,14 +2,14 @@
 	var App = {
 		// constants
 		ui: AppUi,
-		currentPage: null, // 当前页码
-		pageCount: null, // 章总页码
+		book: null,
 
 		// constructor
         init: function () {
 			var self = this;
 			self.ui.init(self);
-			self.currentPage = 1;
+			self.book = Book.init(book);
+			delete(book);
 		},
 
 		// 是否 iPhone
@@ -22,12 +22,11 @@
 		// 启动应用
 		run: function() {
 			var self = this;
+			self.ui.displayHeroUnit();
 			if (!self.isIphone() && !DEBUG) {
-				self.ui.displayHeroUnit();
 				self.ui.displayNoIphone();
 			} else {
 				if (!window.navigator.standalone && DEBUG_MODE != 'standalone') {
-					self.ui.displayHeroUnit();
 					self.ui.displayDownload();
 					var appCache = window.applicationCache;
 					appCache.ondownloading = function () {
@@ -39,37 +38,33 @@
 				}
 				else { // 以独立应用打开
 					self.ui.displayStandalone();
-					self.standalone();
+					//self.standalone();
 				}
 			};
 		},
 
-		// 启用 App 模式
-		standalone: function() {
+		// 开始阅读
+		startRead: function() {
 			var self = this;
-			self.chapters = [];
-			for (var i = 0; i < book.chapters.length; i++) {
-				chapter = new Chapter().init(book.chapters[i].title, book.chapters[i].content);
-				self.chapters.push(chapter);
-			}
-			self.ui.setChapter(self.chapters[0].get$());
-			self.pageCount = self.ui.getPageCount();
+			self.ui.displayRead();
+			self.ui.setChapter(self.book.chapters[0].get$());
+			self.book.setPageCount(self.ui.getPageCount());
 		},
 
 		// 上一页
 		prePage: function() {
 			var self = this;
-			if (self.currentPage > 1) {
-				self.currentPage -= 1;
-				self.ui.setPage(self.currentPage);
+			if (self.book.getCurrentPage() > 1) {
+				self.book.setCurrentPage(self.book.getCurrentPage() - 1);
+				self.ui.setPage(self.book.getCurrentPage());
 			}
 		},
 		// 下一页
 		nextPage: function() {
 			var self = this;
-			if (self.currentPage < self.pageCount) {
-				self.currentPage += 1;
-				self.ui.setPage(self.currentPage);
+			if (self.book.getCurrentPage() < self.book.getPageCount()) {
+				self.book.setCurrentPage(self.book.getCurrentPage() + 1);
+				self.ui.setPage(self.book.getCurrentPage());
 			}
 		},
 	};

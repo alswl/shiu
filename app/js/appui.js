@@ -1,6 +1,7 @@
 (function() {
 	var AppUi = {
 		//类成员
+		$heroUnit: $('#hero_unit'),
 		$content: $('#content'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
@@ -11,7 +12,6 @@
         init: function (app) {
 			var self = this;
 			self.app = app;
-			self.bindChapterClick();
 		},
 
 		// 浏览模式
@@ -28,10 +28,19 @@
 		},
 
 		displayStandalone: function() {
-			$('#main').show();
+			var self = this;
 			$("body").bind('touchmove', function (e) { // 静止触摸反弹
 				e.preventDefault();
 			});
+			self.$heroUnit.click(function() {
+				self.app.startRead();
+				self.bindChapterClick();
+			});
+		},
+
+		displayRead: function() {
+			this.$heroUnit.hide();
+			$('#main').show();
 		},
 
 		// 缓存事件绑定
@@ -88,17 +97,14 @@
 			self.$chapter.css('left', left + 'px');
 		},
 
-		refreshChapterWidth: function() {
-		},
-
 		setChapter: function(html) {
 			this.$content.html(html);
 			this.$chapter = $(this.CHAPTER_SELECTOR);
 		},
 
-		// 获取章节总页码 // TODO： 将排版工作放到 JSON 中完成
+		// 获取章节总页码
 		getPageCount: function() {
-			return $('.chapter > *:last').position().left / this.SCREEN_WIDTH;
+			return $('.chapter > *:last').position().left / (this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP) + 1;
 		}
 	};
 

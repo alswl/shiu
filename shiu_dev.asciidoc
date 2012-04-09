@@ -109,6 +109,10 @@ http://127.0.0.1:9999/jiangye/
 * https://developer.apple.com/library/safari/#documentation/UserExperience/Reference/TouchEventClassReference/TouchEvent/TouchEvent.html[Apple TouchEvent Class Reference]
 * http://select.yeeyan.org/view/213582/202991[针对多点触控浏览器进行的开发]
 
+=== 本地存储 ===
+
+* http://www.slideshare.net/sunnylqm/html5-10672394[Html5三种本地存储方式的比较]
+
 == 开发工具 ==
 
 === manager.py ===

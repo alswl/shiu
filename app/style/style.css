@@ -122,6 +122,10 @@ footer {
 	font-size: 0.8em;
 }
 
+body {
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
 #hero_unit {
     height: 360px;
     padding: 20px 0;
@@ -172,7 +176,6 @@ footer {
 	width: auto;
 	height: 460px;
 	z-index: 100;
-	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 #content .chapter h2 {
 	text-align: justify;
