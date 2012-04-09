@@ -151,6 +151,8 @@ body {
 }
 #hero_unit .book_desc {
 	width: 240px;
+	height: 160px;
+	overflow: hidden;
 	margin: 0 auto;
 	color: #333;
 	font-size: 0.8em;

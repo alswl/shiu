@@ -76,6 +76,7 @@ class Book(object):
         files = map(lambda x: os.path.join(path, x), os.listdir(path))
         chapters = map(lambda x: open(x, 'r'),
                        filter(lambda x: x.endswith('.txt'), files))
+        chapters.sort(key=lambda x: x.name)
         config = ConfigParser.ConfigParser()
         config.read(os.path.join(path, 'info.ini'))
         book = Book(config.get('Book', 'title'),

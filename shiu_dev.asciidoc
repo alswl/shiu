@@ -90,6 +90,8 @@ CSS3 WebGL 硬件加速实现
 self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
 ----
 
+* http://www.html5rocks.com/en/mobile/optimization-and-performance/[HTML5 Techniques for Optimizing Mobile Performance / HTML5 在移动端优化技巧]
+
 == JS ==
 
 === Zepto ===

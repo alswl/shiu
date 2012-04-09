@@ -2,11 +2,11 @@ CACHE MANIFEST
 
 # Cache Manifest Version: 1731
 
-#CACHE:
+CACHE:
 #../js/jquery-1.7.2.min.js
 #../js/shiu.js
 #../style/style.css
-#book.js
+book.js
 
 NETWORK:
 *
