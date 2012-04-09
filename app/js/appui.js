@@ -73,9 +73,9 @@
 				var x = e.clientX;
 				var y = e.clientY;
 				if (x < 100) {
-					self.app.prePage();
+					self.app.preClick();
 				} else if (x > 220) {
-					self.app.nextPage();
+					self.app.nextClick();
 				}
 			});
 		},
@@ -89,7 +89,7 @@
 		// 设定当前页面到指定页数
 		setPage: function(page) {
 			var self = this;
-			var left = 0 - (page - 1) * (self.SCREEN_WIDTH + self.SCREEN_COLUMN_GAP);
+			var left = 0 - page * (self.SCREEN_WIDTH + self.SCREEN_COLUMN_GAP);
 			if ($.browser.webkit) { // firefox for develop
 				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
 			}

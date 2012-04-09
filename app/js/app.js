@@ -47,25 +47,48 @@
 		startRead: function() {
 			var self = this;
 			self.ui.displayRead();
-			self.ui.setChapter(self.book.chapters[0].get$());
+			self.ui.setChapter(self.book.getCurrentChapter().get$());
+			self.ui.setPage(self.book.getCurrentPage());
 			self.book.setPageCount(self.ui.getPageCount());
 		},
 
-		// 上一页
-		prePage: function() {
+		// 换页
+		preClick: function() {
 			var self = this;
-			if (self.book.getCurrentPage() > 1) {
+			if (self.book.getCurrentPage() > 0) {
 				self.book.setCurrentPage(self.book.getCurrentPage() - 1);
 				self.ui.setPage(self.book.getCurrentPage());
+			} else if (self.book.getCurrentChapterIndex() > 0){
+				self.preChapter();
 			}
 		},
-		// 下一页
-		nextPage: function() {
+		nextClick: function() {
 			var self = this;
-			if (self.book.getCurrentPage() < self.book.getPageCount()) {
+			if (self.book.getCurrentPage() < self.book.getPageCount() - 1) {
 				self.book.setCurrentPage(self.book.getCurrentPage() + 1);
 				self.ui.setPage(self.book.getCurrentPage());
+			} else if (self.book.getCurrentChapterIndex() < self.book.chapters.length - 1){
+				self.nextChapter();
 			}
+		},
+
+		// 换章
+		preChapter: function() {
+			var self = this;
+			self.book.setCurrentChapterIndex(self.book.getCurrentChapterIndex() - 1);
+			self.setChapterBegin();
+		},
+		nextChapter: function() {
+			var self = this;
+			self.book.setCurrentChapterIndex(self.book.getCurrentChapterIndex() + 1);
+			self.setChapterBegin();
+		},
+		setChapterBegin: function() {
+			var self = this;
+			self.book.setCurrentPage(0);
+			self.ui.setChapter(self.book.getCurrentChapter().get$());
+			self.book.setPageCount(self.ui.getPageCount());
+			self.ui.setPage(0);
 		},
 	};
 

@@ -1,9 +1,6 @@
 (function() {
 	var Book = {
 
-		currentPage: null, // 当前页码
-		pageCount: null, 
-
 		// constructor
         init: function (book) {
 			var self = this;
@@ -26,7 +23,7 @@
 		getCurrentPage: function() {
 			var page = db.get('currentPage');
 			if (page === null) {
-				page = 1;
+				page = 0;
 			}
 			return page;
 		},
@@ -41,6 +38,20 @@
 			return db.get('pageCount');
 		},
 
+		// 章节
+		setCurrentChapterIndex: function(index) {
+			db.set('currentChapterIndex', index);
+		},
+		getCurrentChapterIndex: function() {
+			index = db.get('currentChapterIndex');
+			if (index === null) {
+				index = 0;
+			}
+			return index;
+		},
+		getCurrentChapter: function() {
+			return this.chapters[this.getCurrentChapterIndex()];
+		},
 
 
 	};
