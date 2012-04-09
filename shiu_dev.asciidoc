@@ -35,7 +35,10 @@ http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web 
 * iOS 特有标签查看
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
 
-`apple-mobile-web-app-capable` 模式下的点击阴影
+`apple-mobile-web-app-capable` 模式下的点击阴影，使用
+`-webkit-tap-highlight-color: rgba(0,0,0,0);` 消除
+
+* http://stackoverflow.com/a/9784399/342757
 
 === window.navigator.standalone ===
 
@@ -113,7 +116,7 @@ http://127.0.0.1:9999/jiangye/
 受 Django / RoR 启发，我写了一个 Python 脚本 manager.py 用来管理项目，
 功能包括：启动一个静态服务器 / 转换图书格式。
 
-运行 `./manager.py -s <PORT>` 运行静态服务器，默认端口是9999。
+运行 `./manager.py -s -p <PORT>` 运行静态服务器，默认端口是9999。
 运行 `./manager.py --parse-txt ./book/src/jiangye/* --parse-txt-output ./book/jiangye.js`
 来转换文本格式。
 运行 `./manager.py --help` 可以查看到帮助。

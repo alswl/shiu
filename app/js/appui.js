@@ -29,9 +29,9 @@
 
 		displayStandalone: function() {
 			$('#main').show();
-			//$("body").bind('touchmove', function (e) { // 静止触摸反弹
-				//e.preventDefault();
-			//});
+			$("body").bind('touchmove', function (e) { // 静止触摸反弹
+				e.preventDefault();
+			});
 		},
 
 		// 缓存事件绑定

@@ -172,6 +172,7 @@ footer {
 	width: auto;
 	height: 460px;
 	z-index: 100;
+	-webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 #content .chapter h2 {
 	text-align: justify;
