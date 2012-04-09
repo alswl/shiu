@@ -124,6 +124,7 @@ footer {
 
 body {
 	-webkit-tap-highlight-color: rgba(0,0,0,0);
+	/*-webkit-transform: translate3d(0, 0, 0);*/
 }
 
 #hero_unit {
@@ -185,15 +186,14 @@ body {
     height: 440px;
     position: absolute;
 	left: 0px;
-	width: auto;
     -moz-column-width: 320px;
     -moz-column-gap: 12px;
 	-moz-column-count: auto;
     -webkit-column-width: 320px;
     -webkit-column-gap: 12px;
 	-webkit-column-count: auto;
-	-moz-transition: left 200ms;
-	-webkit-transition: left 200ms;
+	-moz-transition: all 300ms ease-out;
+	-webkit-transition: all 300ms ease-out;
 }
 #content .chapter * {
 	width: 304px;

@@ -49,7 +49,9 @@
 			self.ui.displayRead();
 			self.ui.setChapter(self.book.getCurrentChapter().get$());
 			self.ui.setPage(self.book.getCurrentPage());
-			self.book.setPageCount(self.ui.getPageCount());
+			if (self.book.getCurrentPage() === 0) {
+				self.book.setPageCount(self.ui.getPageCount());
+			}
 		},
 
 		// 换页

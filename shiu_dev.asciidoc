@@ -84,7 +84,23 @@ jQuery 实现 `jQuery.animate({'left': left}, 200)`
 
 CSS3 实现 `-moz-transition: left 201ms;`
 
+CSS3 WebGL 硬件加速实现
+
+----
+self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
+----
+
 == JS ==
+
+=== Zepto ===
+
+http://zeptojs.com/[Zepto] 和 jQuery 完全兼容，并且更小。
+
+优点：
+
+* 更精简，加载更快
+* 只支持「现代浏览器」
+* 适合开发移动应用
 
 === 结构设计 ===
 

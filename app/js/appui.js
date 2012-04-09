@@ -93,8 +93,10 @@
 			if ($.browser.webkit) { // firefox for develop
 				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
 			}
-			//self.$chapter.css('-webkit-transition', 'left 1s'
-			self.$chapter.css('left', left + 'px');
+			//self.$chapter.css('left', left + 'px'); 效率低
+			self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
+			self.$chapter.css('-moz-transform','translate3d(' + left + 'px, 0, 0)');
+
 		},
 
 		setChapter: function(html) {
@@ -104,7 +106,7 @@
 
 		// 获取章节总页码
 		getPageCount: function() {
-			return $('.chapter > *:last').position().left / (this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP) + 1;
+			return ($('.chapter *').last().offset().left - this.SCREEN_PADDING) / (this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP) + 1;
 		}
 	};
 
