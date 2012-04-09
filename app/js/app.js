@@ -48,8 +48,8 @@
 		standalone: function() {
 			var self = this;
 			self.chapters = [];
-			for (var i = 0; i < book.indexs.length; i++) {
-				chapter = new Chapter().init(book.indexs[i], book.contents[i]);
+			for (var i = 0; i < book.chapters.length; i++) {
+				chapter = new Chapter().init(book.chapters[i].title, book.chapters[i].content);
 				self.chapters.push(chapter);
 			}
 			self.ui.setChapter(self.chapters[0].get$());

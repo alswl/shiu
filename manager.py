@@ -9,6 +9,13 @@ import SimpleHTTPServer
 import BaseHTTPServer
 import SocketServer
 import logging
+import json
+
+import ConfigParser
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 def zh2unicode(text):
@@ -46,32 +53,61 @@ def encode_js(txt):
     """编码 js 字符串"""
     return txt.replace("'", r"\'").replace('"', r'\"')
 
-def parse_txt(chapters):
-    """转换文本到 json js"""
-    src = """
-var book = {
-    length: %(length)s,
-    indexs: [%(indexs)s],
-    contents: [%(contents)s]
-}"""
-    indexs = ','.join(map(lambda x: "\n'" + encode_js(x[0]) + "'", chapters))
-    contents = ','.join(map(lambda x: "\n'" + encode_js(x[1]) + "'", chapters))
-    return src %{
-        'length': len(chapters),
-        'indexs': indexs,
-        'contents': contents
-    }
+class Book(object):
+    def __init__(self, title, author):
+        self.title = title
+        self.author = author
+        self.chapters = []
 
-def parse_chapter(txt):
-    """转换一章"""
-    l = map(lambda x: x.strip(), txt.splitlines())
-    l = filter(lambda x: len(x.strip()) > 0, l)
-    try:
-        title = l[0]
-        contents = reduce(lambda x, y: x + r'\r' + y, l[1:])
-    except IndexError:
-        raise ValueError # TODO add
-    return (title, contents)
+    def to_string(self):
+        return 'var book = %s' %json.dumps(self.dic(), ensure_ascii=False,
+                                          indent=2)
+
+    def dic(self):
+        return {
+            'title': self.title,
+            'author': self.author,
+            'chapters': map(lambda x: x.dic(), self.chapters),
+        }
+
+    @staticmethod
+    def parse_dir(path):
+        """从某个文件夹下面的 txt生成 Book"""
+        files = map(lambda x: os.path.join(path, x), os.listdir(path))
+        chapters = map(lambda x: open(x, 'r'),
+                       filter(lambda x: x.endswith('.txt'), files))
+        config = ConfigParser.ConfigParser()
+        config.read(os.path.join(path, 'info.ini'))
+        book = Book(config.get('Book', 'title'),
+                    config.get('Book', 'author'))
+        for i, f in enumerate(chapters):
+            book.chapters.append(Chapter.parse(zh2unicode(f.read()), i + 1))
+            f.close()
+        return book
+
+class Chapter(object):
+    def __init__(self, title, content, index=None):
+        self.title = title
+        self.content = content
+        self.index = index
+
+    def dic(self):
+        return {
+            'index': self.index,
+            'title': self.title,
+            'content': self.content,
+        }
+
+    @staticmethod
+    def parse(txt, index):
+        l = map(lambda x: x.strip(), txt.splitlines())
+        l = filter(lambda x: len(x.strip()) > 0, l)
+        try:
+            title = l[0]
+            content = reduce(lambda x, y: x + '\r' + y, l[1:])
+        except IndexError:
+            raise ValueError # TODO add
+        return Chapter(title, content, index)
 
 def main():
     parser = argparse.ArgumentParser(
@@ -83,25 +119,21 @@ def main():
     parser.add_argument('--port', '-p',
                         type=int,
                         help='static server port, default is 9999')
-    parser.add_argument('--parse-txt',
-                        type=argparse.FileType('r'),
-                        help='generate story json from txt',
-                        nargs='*')
-    parser.add_argument('--parse-txt-output',
+    parser.add_argument('--parse-dir',
+                        type=str,
+                        help='generate story json from a book folder',)
+    parser.add_argument('--parse-js-output',
                         type=argparse.FileType('w'),
-                        help='save the js of book',
-                       )
+                        help='save the js of book',)
     args = parser.parse_args()
 
     if args.serve:
         serve(args.port)
-    elif args.parse_txt and args.parse_txt_output:
-        chapters = map(lambda x: parse_chapter(zh2unicode(x.read())),
-                       args.parse_txt)
-        src = parse_txt(chapters)
-        args.parse_txt_output.write(src.encode('utf-8'))
-        map(lambda x: x.close(), args.parse_txt)
-        args.parse_txt_output.close()
+    elif args.parse_dir and args.parse_js_output:
+        book = Book.parse_dir(args.parse_dir)
+
+        args.parse_js_output.write(book.to_string().encode('utf-8'))
+        args.parse_js_output.close()
     else:
         parser.print_help()
 
