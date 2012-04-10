@@ -53,6 +53,7 @@
 		initIndexs: function() {
 			var self = this;
 			self.$indexs.html(self.app.book.getIndexsHtml());
+			self.bindIndexsScroll();
 		},
 
 		// 设定横屏 / 适应尺寸 // TODO
@@ -218,7 +219,9 @@
 			});
 		},
 
-		contentTouched: function() {
+		// 目录滚动
+		bindIndexsScroll: function() {
+			new iScroll('index_wrapper', {});
 		},
 	
 		// 设定当前页面到指定页数

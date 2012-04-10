@@ -75,7 +75,7 @@ appCache.onprogress = function (e) {
 		percent = Math.round(100 * (++progresscount / 8)) + "%"
 	}
 	$("#download .percent").text(percent);
-};
+}
 ----
 
 * http://ajax.sys-con.com/node/1643966/mobile[Using HTML5 Application Cache to Create Offline Web Applications]
@@ -108,6 +108,12 @@ self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // �
 
 * http://www.html5rocks.com/en/mobile/optimization-and-performance/[HTML5 Techniques for Optimizing Mobile Performance / HTML5 在移动端优化技巧]
 * http://www.turnjs.com/[模拟翻书效果的js库]
+
+=== Drag ===
+
+iScroll
+
+* http://cubiq.org/iscroll-4[iScroll 4]
 
 == JS ==
 

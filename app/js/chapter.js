@@ -29,12 +29,7 @@
 
 		// 获取中文的「第 N 章」
 		getCnIndex: function() {
-			var self = this;
-			var cnNumArr = "一二三四五六七八九十";
-			var cnNum = (self.index + 1 >= 20 ? cnNumArr.charAt(parseInt((self.index + 1) / 10, 10) - 1) : "")
-				+ (self.index + 1 >= 10 ? cnNumArr.charAt(9) : "")
-				+ ((self.index + 1) % 10 == 0 ? "" : cnNumArr.charAt((self.index + 1) % 10 - 1));
-			return "第" + cnNum + "章 ";
+			return "第" + Util.numberToChinese(this.index + 1) + "章 ";
 		}
 	};
 	window.Chapter = Chapter;
