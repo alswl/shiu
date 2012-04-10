@@ -1,6 +1,6 @@
 CACHE MANIFEST
 
-# Cache Manifest Version: 1513
+# Cache Manifest Version: 2040
 
 CACHE:
 
@@ -16,6 +16,7 @@ CACHE:
 #../style/style.css
 
 ../image/cover.png
+../image/side_bg.png
 logo.jpg
 cover.jpg
 

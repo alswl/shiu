@@ -3,9 +3,10 @@
 		var self = this;
 	};
     Chapter.prototype = {
-        init: function(title, content) {
+        init: function(title, content, index) {
 			this.title = title;
 			this.content = content;
+			this.index = index;
 
 			return this;
 		},
@@ -28,10 +29,11 @@
 
 		// 获取中文的「第 N 章」
 		getCnIndex: function() {
+			var self = this;
 			var cnNumArr = "一二三四五六七八九十";
-			var cnNum = (self.index + 1 >= 20 ? cnNumArr.charAt(parseInt(self.index + 1 / 10) - 1) : "")
+			var cnNum = (self.index + 1 >= 20 ? cnNumArr.charAt(parseInt((self.index + 1) / 10, 10) - 1) : "")
 				+ (self.index + 1 >= 10 ? cnNumArr.charAt(9) : "")
-				+ (self.index + 1 % 10 == 0 ? "" : cnNumArr.charAt(self.index + 1 % 10 - 1));
+				+ ((self.index + 1) % 10 == 0 ? "" : cnNumArr.charAt((self.index + 1) % 10 - 1));
 			return "第" + cnNum + "章 ";
 		}
 	};

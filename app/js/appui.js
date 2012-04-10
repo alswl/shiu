@@ -6,6 +6,7 @@
 		$alert: $('#alert'),
 		$temp: $('#temp'),
 		$sidebar: $('#sidebar'),
+		$indexs: $('#indexs'),
 		$indexBtn: $('#sidebar .index_btn'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
@@ -36,15 +37,22 @@
 			});
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
+				self.initIndexs();
 				self.bindChapterClick();
 				self.bindIndexBtnClick();
 				self.bindSidebarClick();
+				self.bindIndexAClick();
 			});
 		},
 
 		displayRead: function() {
 			this.$heroUnit.hide();
 			$('#main').show();
+		},
+
+		initIndexs: function() {
+			var self = this;
+			self.$indexs.html(self.app.book.getIndexsHtml());
 		},
 
 		// 设定横屏 / 适应尺寸 // TODO
@@ -80,7 +88,7 @@
 
 		cacheOnCached: function(e) {
 			App.success('下载完成', true);
-			App.saveBook(book); // 这时的 this 是 window.localstorage
+			App.saveBook(window.book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
@@ -89,7 +97,7 @@
 
 		onCacheNoUpdate: function() {
 			App.success('下载完成', true);
-			App.saveBook(book); // 这时的 this 是 window.localstorage
+			App.saveBook(window.book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
@@ -137,6 +145,7 @@
 			});
 		},
 
+		// 目录显示/隐藏按钮
 		bindIndexBtnClick: function() {
 			var self = this;
 
@@ -162,6 +171,21 @@
 			});
 		},
 
+		// 目录点击
+		bindIndexAClick: function() {
+			var self = this;
+
+			self.$indexs.find('li a').click(
+				function(e) {
+					self.app.book.setCurrentChapterIndex(parseInt(this.rel, 10));
+					self.app.setChapter();
+					//e.stopPropagation();
+					return false;
+				}
+			);
+		},
+
+		// 侧边栏点击
 		bindSidebarClick: function() {
 			var self = this;
 			self.$sidebar._hide = function() { // 隐藏

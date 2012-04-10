@@ -8,7 +8,7 @@
 			self.author = book.author;
 			self.chapters = [];
 			for (var i = 0; i < book.chapters.length; i++) {
-				chapter = new Chapter().init(book.chapters[i].title, book.chapters[i].content);
+				var chapter = new Chapter().init(book.chapters[i].title, book.chapters[i].content, i);
 				self.chapters.push(chapter);
 			}
 			return self;
@@ -53,7 +53,14 @@
 			return this.chapters[this.getCurrentChapterIndex()];
 		},
 
-
+		getIndexsHtml: function() {
+			var self = this;
+			var html = ''
+			for (var i = 0; i < self.chapters.length; i++) {
+				html += '<li><a href="javascript:;" rel="'+ i + '">'+ self.chapters[i].getCnIndex() + self.chapters[i].title + '</a></li>';
+			}
+			return html;
+		},
 	};
 
 	window.Book = Book;

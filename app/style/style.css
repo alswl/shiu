@@ -23,7 +23,7 @@ ul, ol { list-style: none; }
 
 /** 重置文本格式元素 **/
 a { text-decoration: none; }
-a:hover { text-decoration: underline; }
+a:hover { text-decoration: none; }
 
 sup { vertical-align: text-top; } /* 重置，减少对行高的影响 */
 sub { vertical-align: text-bottom; }
@@ -63,47 +63,8 @@ figure {
 .clearfix {
 	display: block;
 }
-.fl {
-	float: left;
-}
-.fr {
-	float: right;
-}
 .hidden {
 	display: none;
-}
-.cb {
-	clear: both;
-}
-.cl {
-	clear: left;
-}
-.cr {
-	clear: right;
-}
-.tl {
-	text-align: left;
-}
-.tr {
-	text-align: right;
-}
-.tc {
-	text-align: center;
-}
-.vm {
-	vertical-align: middle;
-}
-.pr {
-	position: relative;
-}
-.pa {
-	position: absolute;
-}
-.fn {
-	font-weight: normal;
-}
-.fb {
-	font-weight: bold;
 }
 
 body {
@@ -214,6 +175,17 @@ body {
 	height: 460px;
 	background:url("../image/side_bg.png");
 }
+#sidebar .wrapper #indexs li {
+	font-size: 16px;
+	padding: 4px 10px;
+	border-bottom: solid #444 1px;
+	border-top: solid #333 1px;
+}
+#sidebar .wrapper #indexs li a {
+	color: #fff;
+	display: block;
+	/*text-decoration: none;*/
+}
 #sidebar .wrapper .copyright {
 	text-align: center;
 	color: #fff;
@@ -224,7 +196,6 @@ body {
 #sidebar .btn {
 	position: relative;
 	float: left;
-	top: 30px;
 	width: 30px;
 	height: 50px;
 	line-height: 50px;
@@ -237,6 +208,7 @@ body {
 	-webkit-transition: all 300ms ease-out;
 }
 #sidebar .index_btn {
+	top: 250px;
 	background:  #00ADEE;
     border: 1px solid #0076A3;
 }
