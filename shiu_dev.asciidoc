@@ -49,11 +49,14 @@ http://developer.apple.com/library/safari/#documentation/appleapplications/refer
 === 本地存储 ===
 
 * Manifest
-* Web SQL Database
+* Web SQL Database * http://www.w3.org/TR/webdatabase/
 * LocalStorage 5M -> 10M http://stackoverflow.com/a/1923384/342757[Limit of localstorage on iPhone?]
+* SessionStorage
 * indexedDB
 
-iOS 5 localStorage 限制 10M
+iOS 5 localStorage 限制 5M，用户申请之后可以获取 10M。
+我现在解决办法是不放太长的书，分卷。
+可以考虑使用 Web SQL Database。
 
 * 
 
@@ -102,6 +105,7 @@ self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // �
 ----
 
 * http://www.html5rocks.com/en/mobile/optimization-and-performance/[HTML5 Techniques for Optimizing Mobile Performance / HTML5 在移动端优化技巧]
+* http://www.turnjs.com/[模拟翻书效果的js库]
 
 == JS ==
 
@@ -170,3 +174,8 @@ https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
 绑定自定义域名 `http://shiu.log4d.com` 。
 
 * http://help.github.com/pages/[GitHub Pages]
+
+== 参考资料 ==
+
+* http://sixrevisions.com/web-development/html5-iphone-app/[How to Make an HTML5 iPhone App]
+* http://mobilehtml5.org/[智能手机和平板中默认浏览器对HTML5和CSS3新技术的支持情况]
