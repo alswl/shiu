@@ -5,6 +5,8 @@
 		$content: $('#content'),
 		$alert: $('#alert'),
 		$temp: $('#temp'),
+		$sidebar: $('#sidebar'),
+		$indexBtn: $('#sidebar .index_btn'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
@@ -35,6 +37,8 @@
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
 				self.bindChapterClick();
+				self.bindIndexBtnClick();
+				self.bindSidebarClick();
 			});
 		},
 
@@ -123,13 +127,71 @@
 				var y = e.clientY;
 				if (x < 100) {
 					self.app.preClick();
+					self.$indexBtn._hide();
 				} else if (x > 220) {
 					self.app.nextClick();
+					self.$indexBtn._hide();
+				} else {
+					self.$indexBtn._toggle();
 				}
 			});
 		},
 
-		bindTouch: function() {
+		bindIndexBtnClick: function() {
+			var self = this;
+
+			self.$indexBtn._hide = function() { // 隐藏
+				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
+				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
+			};
+			self.$indexBtn._show = function() { // 显示
+				self.$sidebar.css('-webkit-transform','translate3d(40px, 0, 0)');
+				self.$sidebar.css('-moz-transform','translate3d(40px, 0, 0)');
+			};
+			self.$indexBtn._toggle = function() {
+				if (self.$indexBtn.offset().left < 0) {
+					self.$indexBtn._show();
+				} else {
+					self.$indexBtn._hide();
+				}
+			};
+
+			self.$indexBtn.click(function(e) {
+				self.$sidebar._toggle();
+				e.stopPropagation();
+			});
+		},
+
+		bindSidebarClick: function() {
+			var self = this;
+			self.$sidebar._hide = function() { // 隐藏
+				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
+				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
+				self.$sidebar.css('background', 'none');
+			};
+			self.$sidebar._show = function() { // 显示
+				self.$sidebar.css('-webkit-transform','translate3d(320px, 0, 0)');
+				self.$sidebar.css('-moz-transform','translate3d(320px, 0, 0)');
+				self.$sidebar.css('background', 'transparent');
+			};
+			self.$sidebar._toggle = function() {
+				if (self.$sidebar.offset().left < 0) {
+					self.$sidebar._show();
+				} else {
+					self.$sidebar._hide();
+				}
+			};
+
+			self.$sidebar.click(function(e) {
+				if (e.clientX > 280) {
+					if (self.$sidebar.offset().left < 0) {
+						//self.$content.click();
+					} else {
+						self.$sidebar._hide();
+					}
+				}
+				self.$indexBtn._hide();
+			});
 		},
 
 		contentTouched: function() {

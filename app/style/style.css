@@ -197,11 +197,50 @@ body {
 	width: 320px;
 	height: 460px;
 }
-#indexs {
+#sidebar {
+	position: absolute;
+	left: -320px;
 	width: 320px;
 	height: 460px;
 	z-index: 200;
+	/*background: transparent;*/
+	-moz-transition: all 300ms ease-out;
+	-webkit-transition: all 300ms ease-out;
 }
+#sidebar .wrapper {
+	position: relative;
+	float: left;
+	width: 280px;
+	height: 460px;
+	background:url("../image/side_bg.png");
+}
+#sidebar .wrapper .copyright {
+	text-align: center;
+	color: #fff;
+}
+#sidebar .wrapper .copyright a {
+	color: #fff;
+}
+#sidebar .btn {
+	position: relative;
+	float: left;
+	top: 30px;
+	width: 30px;
+	height: 50px;
+	line-height: 50px;
+	padding: 4px;
+	font-size: 20px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+	border-radius: 0 6px 6px 0;
+	-moz-transition: all 300ms ease-out;
+	-webkit-transition: all 300ms ease-out;
+}
+#sidebar .index_btn {
+	background:  #00ADEE;
+    border: 1px solid #0076A3;
+}
+
 #content {
 	width: auto;
 	height: 460px;
