@@ -78,6 +78,7 @@ appCache.onprogress = function (e) {
 };
 ----
 
+* http://ajax.sys-con.com/node/1643966/mobile[Using HTML5 Application Cache to Create Offline Web Applications]
 * http://www.cnblogs.com/ATree/archive/2012/03/13/HTML5-Storage-API.html[HTML5 存储API介绍]
 * http://handyxuefeng.blog.163.com/blog/static/45452172201111414317216/[初探--HTML5离线存储]
 * http://www.w3.org/TR/2011/WD-html5-20110525/offline.html[W3C - 5.6 Offline Web applications]

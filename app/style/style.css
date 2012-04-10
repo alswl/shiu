@@ -109,11 +109,11 @@ figure {
 body {
 	background: url("../image/bg.png") repeat scroll 0 0 transparent;
 	font-family: 'Helvetica Neue', Helvetica,Arial;
-	height: 460px;
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
 	width: 320px;
+	height: 460px;
 }
 footer {
 	width: 100%;
@@ -171,6 +171,7 @@ body {
 	position: absolute;
 	width: 100%;
 	display: hidden;
+	z-index: 900;
 }
 #alert strong {
 	border-radius: 5px;
@@ -193,12 +194,12 @@ body {
 }
 
 #main {
-	height: 460px;
 	width: 320px;
+	height: 460px;
 }
 #indexs {
-	height: 460px;
 	width: 320px;
+	height: 460px;
 	z-index: 200;
 }
 #content {

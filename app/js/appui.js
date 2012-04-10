@@ -8,6 +8,7 @@
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
+		SCREEN_HEIGHT: 480,
 		SCREEN_PADDING: 8,
 		SCREEN_COLUMN_GAP: 12,
 
@@ -40,6 +41,25 @@
 		displayRead: function() {
 			this.$heroUnit.hide();
 			$('#main').show();
+		},
+
+		// 设定横屏 / 适应尺寸 // TODO
+		setScreen: function() {
+			var x = window.screen.width;
+			var y = window.screen.height;
+			$('#body').css('width', x + 'px');
+			$('#main').css('width', x + 'px');
+			$('#index').css('width', x + 'px');
+			$('#content .chapter').css('width', x + 'px');
+			$('#content .chapter').css('-moz-column-width', x + 'px');
+			$('#content .chapter').css('-webkit-column-width', x + 'px');
+			$('#body').css('height', y + 'px');
+			$('#main').css('height', y + 'px');
+			$('#index').css('height', y + 'px');
+			$('#content').css('height', y + 'px');
+			this.SCREEN_WIDTH = x;
+			this.SCREEN_HEIGHT = y;
+			this.setPage(0);
 		},
 
 		// 缓存事件绑定

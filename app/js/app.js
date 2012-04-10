@@ -37,6 +37,7 @@
 						self.book = Book.init(self.loadBook());
 						delete(book);
 						self.ui.displayStandalone();
+						self.bindOrientate();
 					}
 				} else  { // 页面打开，开始下载
 					self.download();
@@ -85,6 +86,18 @@
 		},
 		loadBook: function() {
 			return db.get(bookTitle  + '_book');
+		},
+
+
+		// 绑定横屏
+		bindOrientate: function() {
+			var self = this;
+			window.addEventListener("orientationchange", function (e) {
+				if (Math.abs(window.orientation) === 90) {
+					self.error('人家还不会横屏处理啦，等以后的版本吧', true);
+				} else {
+				}
+			}, false);
 		},
 
 		// 换页
