@@ -43,7 +43,7 @@
 		},
 
 		// 缓存事件绑定
-		cacheOnProgress: function(e) {
+		onCacheProgress: function(e) {
 			var self = this;
 			var percent = "";
 			if (e && e.lengthComputable) {
@@ -55,20 +55,21 @@
 		},
 
 		cacheOnCached: function(e) {
+			App.success('下载完成', true);
 			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
-			App.success('下载完成', true);
 			App.downloadCallback();
 		},
 
-		cacheOnUpdate: function() {
+		onCacheNoUpdate: function() {
+			App.success('下载完成', true);
 			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
-			App.success('下载完成', true);
+			App.downloadCallback();
 		},
 
 		alert: function(message, level, delay) {

@@ -147,19 +147,19 @@ body {
 #hero_unit .book_cover {
 	margin: 6px;
 }
-#hero_unit .book_name {
-}
 #hero_unit .book_desc {
 	width: 240px;
 	height: 200px;
 	overflow: hidden;
 	margin: 0 auto;
+	background: #ddd;
+	border-radius: 6px;
+}
+#hero_unit .content {
 	color: #333;
 	font-size: 0.8em;
 	text-align: left;
 	text-indent: 2em;
-	background: #ddd;
-	border-radius: 6px;
 }
 #hero_unit li {
 	list-style: disc inside none;

@@ -44,17 +44,22 @@
 			};
 		},
 
+		downloadCallback: function() {
+		},
+
 		download: function() {
 			var self = this;
 			self.ui.displayDownload();
 			var appCache = window.applicationCache;
 			appCache.ondownloading = function () {
-				window.progresscount = 0
+				window.progresscount = 0;
 			};
-			self.loadBookJs();
-			appCache.onprogress = self.ui.cacheOnProgress;
+			appCache.onprogress = self.ui.onCacheProgress;
 			appCache.oncached  = self.ui.cacheOnCached;
-			appCache.onnoupdate  = self.ui.cacheOnUpdate;
+			appCache.onnoupdate  = self.ui.onCacheNoUpdate;
+			appCache.onupdateready = self.ui.cacheOnCached;
+
+			self.loadBookJs();
 		},
 
 		// 开始阅读
