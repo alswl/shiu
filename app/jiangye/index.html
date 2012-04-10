@@ -1,8 +1,8 @@
 <!DOCTYPE html >
 <html manifest="offline.manifest">
 <head>
-<title>将夜 - Shiu</title>
 <meta charset="utf-8">
+<title>将夜 - Shiu</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -34,15 +34,15 @@
 			<strong><span class="tip">下载中</span>... (<span class="percent">0</span>%)</strong>
 			<div class="complete hidden">
 				<p>请点击屏幕下方工具栏中间按钮</p>	
-				<p>选择“<strong>添加到主屏幕</strong>”即可成完下载</p>	
+				<p>选择“<strong>添加到主屏幕</strong>”即可开始阅读</p>	
 			</div>
 		</div>
 	</div>
-	<div id="noiphone" class="hidden">请在iPhone/iPod Touch打开</div>
 	<footer>© 2012 <a href="http://shiu.log4d.com">Shiu</a> @alswl</footer>
 </div>
 
-<div id="rotation_error" class="hidden"></div>
+<div id="alert"><strong></strong></div>
+
 <div id="loading" class="hidden">加载中…</div>
 <div id="main" class="hidden">
 	<div id="indexs" class="hidden">
@@ -52,6 +52,8 @@
 		<!--</section>-->
 	</div>
 </div>
+
+<div id="temp" class="hidden"></div>
 
 <script type="text/javascript" src="../js/zepto.min.js"></script>
 <script type="text/javascript" src="../js/common.js"></script>

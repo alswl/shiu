@@ -3,6 +3,8 @@
 		//类成员
 		$heroUnit: $('#hero_unit'),
 		$content: $('#content'),
+		$alert: $('#alert'),
+		$temp: $('#temp'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
@@ -19,11 +21,8 @@
 			$('#hero_unit').show();
 		},
 
-		displayNoIphone: function () {
-			$('#noiphone').show();
-		},
-
 		displayDownload: function() {
+			$('#hero_unit .book_desc').css('height', '120px');
 			$('#download').show();
 		},
 
@@ -32,7 +31,7 @@
 			$("body").bind('touchmove', function (e) { // 静止触摸反弹
 				e.preventDefault();
 			});
-			self.$heroUnit.click(function() {
+			self.$heroUnit.one('click', function() {
 				self.app.startRead();
 				self.bindChapterClick();
 			});
@@ -59,14 +58,40 @@
 			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
-			$("#download .complete").show()
+			$("#download .complete").show();
+			App.success('下载完成', true);
+			App.downloadCallback();
 		},
 
 		cacheOnUpdate: function() {
 			App.saveBook(book); // 这时的 this 是 window.localstorage
 			$("#download .percent").text('100');
 			$("#download .tip").text("下载完成");
-			$("#download .complete").show()
+			$("#download .complete").show();
+			App.success('下载完成', true);
+		},
+
+		alert: function(message, level, delay) {
+			var self = this;
+			if (level === 'disable') {
+				self.$alert.hide();
+				self.$alert.children().html('').removeClass();
+				return;
+			}
+			self.$alert.show();
+			self.$alert.children().html(message).addClass(level);
+			if (delay === undefined) {
+				$('body').one('click', function() {
+					self.$alert.hide();
+					self.$alert.children().html('').removeClass();
+				});
+			} else {
+				setTimeout(function() {
+					App.ui.$alert.hide();
+					App.ui.$alert.children().html('').removeClass();
+					}, 3000
+				);
+			}
 		},
 
 		// 书籍内容页面单击事件
@@ -103,7 +128,10 @@
 		},
 
 		setChapter: function(html) {
-			this.$content.html(html);
+			this.$temp.html(html);
+			this.$content.children().remove();
+			this.$content.append(this.$temp.children());
+			//this.$content.children().first().remove();
 			this.$chapter = $(this.CHAPTER_SELECTOR);
 		},
 

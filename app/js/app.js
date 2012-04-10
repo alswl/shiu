@@ -21,31 +21,40 @@
 		run: function() {
 			var self = this;
 			self.ui.displayHeroUnit();
-			if (!self.isIphone() && !DEBUG) {
-				self.ui.displayNoIphone();
+			if (!self.isIphone() && !DEBUG) { // 非 iOS 打开
+				self.error('请在iPhone/iPod Touch打开');
 			} else {
 				if (window.navigator.standalone || (DEBUG === true && DEBUG_MODE === 'standalone')) { // 以独立应用打开
-					book = self.loadBook();
-					if (book === null) {
-						self.ui.displayDownload();
-						return;
+					if (!self.loadBook()) { // 书籍不存在
+						self.error('书籍数据不存在，开始重新下载');
+						self.downloadCallback = function() {
+							window.location.reload();
+						}
+						self.download();
+					} else { // 开始阅读
+						self.info('请单击开始阅读', true);
+						book = self.loadBook();
+						self.book = Book.init(self.loadBook());
+						delete(book);
+						self.ui.displayStandalone();
 					}
-					self.book = Book.init(self.loadBook());
-					//delete(book);
-					self.ui.displayStandalone();
-					//self.standalone();
-				} else  {
-					self.ui.displayDownload();
-					var appCache = window.applicationCache;
-					appCache.ondownloading = function () {
-						window.progresscount = 0
-					};
-					self.loadBookJs();
-					appCache.onprogress = self.ui.cacheOnProgress;
-					appCache.oncached  = self.ui.cacheOnCached;
-					appCache.onnoupdate  = self.ui.cacheOnUpdate;
+				} else  { // 页面打开，开始下载
+					self.download();
 				}
 			};
+		},
+
+		download: function() {
+			var self = this;
+			self.ui.displayDownload();
+			var appCache = window.applicationCache;
+			appCache.ondownloading = function () {
+				window.progresscount = 0
+			};
+			self.loadBookJs();
+			appCache.onprogress = self.ui.cacheOnProgress;
+			appCache.oncached  = self.ui.cacheOnCached;
+			appCache.onnoupdate  = self.ui.cacheOnUpdate;
 		},
 
 		// 开始阅读
@@ -97,20 +106,35 @@
 		preChapter: function() {
 			var self = this;
 			self.book.setCurrentChapterIndex(self.book.getCurrentChapterIndex() - 1);
-			self.setChapterBegin();
+			self.setChapter();
 		},
 		nextChapter: function() {
 			var self = this;
 			self.book.setCurrentChapterIndex(self.book.getCurrentChapterIndex() + 1);
-			self.setChapterBegin();
+			self.setChapter();
 		},
-		setChapterBegin: function() {
+
+		setChapter: function() {
 			var self = this;
 			self.book.setCurrentPage(0);
 			self.ui.setChapter(self.book.getCurrentChapter().get$());
 			self.book.setPageCount(self.ui.getPageCount());
 			self.ui.setPage(0);
 		},
+
+		// alert
+		error: function(message, delay) {
+			this.ui.alert(message, 'error', delay);
+		},
+		info: function(message, delay) {
+			this.ui.alert(message, 'info', delay);
+		},
+		success: function(message, delay) {
+			this.ui.alert(message, 'success', delay);
+		},
+		messageDisable: function() {
+			this.ui.alert(null, 'disable');
+		}
 	};
 
 	window.App = App;
