@@ -77,7 +77,7 @@
 		loadBookJs: function() {
 			var element = document.createElement("script"); 
 			element.type = "text/javascript";
-			element.src = './book.js';
+			element.src = './book.min.js';
 			$('head')[0].appendChild(element);
 		},
 
