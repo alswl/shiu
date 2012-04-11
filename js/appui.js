@@ -22,11 +22,11 @@
 
 		// 浏览模式
 		displayHeroUnit: function () {
-			$('#hero_unit').show();
+			this.$heroUnit.show();
 		},
 
 		displayDownload: function() {
-			$('#hero_unit .book_desc').css('height', '120px');
+			this.$heroUnit.find('.book_desc').css('height', '120px');
 			$('#download').show();
 		},
 
@@ -40,8 +40,7 @@
 				self.initIndexs();
 				self.bindChapterClick();
 				self.bindIndexBtnClick();
-				self.bindSidebarClick();
-				self.bindIndexAClick();
+				self.sidebar = new window.ui.Sidebar().init('#sidebar', self);
 			});
 		},
 
@@ -150,72 +149,28 @@
 		bindIndexBtnClick: function() {
 			var self = this;
 
+			// 绑定「目录按钮」自定义方法
 			self.$indexBtn._hide = function() { // 隐藏
-				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
+				self.sidebar.hide();
 			};
 			self.$indexBtn._show = function() { // 显示
 				self.$sidebar.css('-webkit-transform','translate3d(40px, 0, 0)');
 				self.$sidebar.css('-moz-transform','translate3d(40px, 0, 0)');
 			};
+			self.$indexBtn._isVisiable = function() {
+				return this.offset().left >= 0;
+			};
 			self.$indexBtn._toggle = function() {
-				if (self.$indexBtn.offset().left < 0) {
-					self.$indexBtn._show();
+				if (this._isVisiable()){
+					this._hide();
 				} else {
-					self.$indexBtn._hide();
+					this._show();
 				}
 			};
 
 			self.$indexBtn.click(function(e) {
-				self.$sidebar._toggle();
+				self.sidebar.toggle();
 				e.stopPropagation();
-			});
-		},
-
-		// 目录点击
-		bindIndexAClick: function() {
-			var self = this;
-
-			self.$indexs.find('li a').click(
-				function(e) {
-					self.app.book.setCurrentChapterIndex(parseInt(this.rel, 10));
-					self.app.setChapter();
-					//e.stopPropagation();
-					return false;
-				}
-			);
-		},
-
-		// 侧边栏点击
-		bindSidebarClick: function() {
-			var self = this;
-			self.$sidebar._hide = function() { // 隐藏
-				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('background', 'none');
-			};
-			self.$sidebar._show = function() { // 显示
-				self.$sidebar.css('-webkit-transform','translate3d(320px, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(320px, 0, 0)');
-				self.$sidebar.css('background', 'transparent');
-			};
-			self.$sidebar._toggle = function() {
-				if (self.$sidebar.offset().left < 0) {
-					self.$sidebar._show();
-				} else {
-					self.$sidebar._hide();
-				}
-			};
-
-			self.$sidebar.click(function(e) {
-				if (e.clientX > 280) {
-					if (self.$sidebar.offset().left < 0) {
-						//self.$content.click();
-					} else {
-						self.$sidebar._hide();
-					}
-				}
-				self.$indexBtn._hide();
 			});
 		},
 
@@ -251,6 +206,70 @@
 		}
 	};
 
-	window.AppUi = AppUi;
+	window.ui.AppUi = AppUi;
 })();
 
+(function() {
+	var Sidebar = function() {};
+	Sidebar.prototype = {
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.ui = ui;
+			self.bindClick();
+			self.bindAClick();
+			return self;
+		},
+
+		hide: function() {
+			this.$.css('-webkit-transform','translate3d(0, 0, 0)');
+			this.$.css('-moz-transform','translate3d(0, 0, 0)');
+			this.$.css('background', 'none');
+		},
+
+		show: function() {
+			this.$.css('-webkit-transform','translate3d(320px, 0, 0)');
+			this.$.css('-moz-transform','translate3d(320px, 0, 0)');
+			this.$.css('background', 'transparent');
+		},
+
+		isVisiable: function() {
+			return this.$.offset().left >= 0;
+		},
+
+		toggle: function() {
+			if (this.isVisiable()) {
+				this.hide();
+			} else {
+				this.show();
+			}
+		},
+
+		bindClick: function() {
+			var self = this;
+			self.$.click(function(e) {
+				if (e.clientX > 280) {
+					self.hide();
+				}
+			});
+		},
+
+		bindAClick: function() {
+			var self = this;
+			self.$.find('#indexs li a').click(function(e) {
+				self.ui.app.book.setCurrentChapterIndex(parseInt(this.rel, 10));
+				self.ui.app.setChapter();
+				self.hide();
+				}
+			);
+		},
+
+	};
+
+window.ui.Sidebar = Sidebar;
+
+})();
+
+(function() {
+})();

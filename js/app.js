@@ -1,7 +1,7 @@
 (function() {
 	var App = {
 		// constants
-		ui: AppUi,
+		ui: window.ui.AppUi,
 		book: null,
 
 		// constructor

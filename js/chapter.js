@@ -29,7 +29,7 @@
 
 		// 获取中文的「第 N 章」
 		getCnIndex: function() {
-			return "第" + Util.numberToChinese(this.index + 1) + "章 ";
+			return "第" + util.numberToChinese(this.index + 1) + "章 ";
 		}
 	};
 	window.Chapter = Chapter;

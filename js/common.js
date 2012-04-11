@@ -30,7 +30,12 @@
 		},
 	}
 
-	var Util = {
+
+	window.db = Db;
+})();
+
+(function() {
+	var util = {
 		/**
 		 * 数字转中文
 		 *
@@ -101,6 +106,10 @@
 		}
 	};
 
-	window.db = Db;
-	window.Util = Util;
+	window.util = util;
 })();
+
+(function() {
+	window.ui = {};
+})();
+
