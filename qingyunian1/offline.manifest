@@ -6,14 +6,14 @@ CACHE:
 
 ../js/zepto.js
 ../js/iscroll.js
-../js/common.js
-../js/chapter.js
-../js/book.js
-../js/appui.js
-../js/app.js
-../js/shiu.js
+#../js/common.js
+#../js/chapter.js
+#../js/book.js
+#../js/appui.js
+#../js/app.js
+#../js/shiu.js
 
-../style/style.css
+#../style/style.css
 
 ../image/cover.png
 ../image/side_bg.png
