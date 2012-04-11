@@ -281,7 +281,7 @@ window.ui.Sidebar = Sidebar;
 			var self = this;
 			self.$ = $(selector);
 			self.ui = ui;
-			self.bindClick();
+			self.bindTouchStart();
 			return self;
 		},
 
@@ -305,12 +305,20 @@ window.ui.Sidebar = Sidebar;
 			}
 		},
 
-		bindClick: function() {
+		bindTouchStart: function() {
 			var self = this;
-			self.$.click(function(e) {
+			self.$.bind('touchstart', function(e) {
 				self.ui.sidebar.toggle();
 				e.stopPropagation();
+				return false;
 			});
+		},
+
+		bindDragEnd: function() { // TODO 用 iScroll 实现拖拽
+			var self = this;
+			self.$.ondragend = function(e) {
+				self.ui.sidebar.show();
+			};
 		},
 
 	};
