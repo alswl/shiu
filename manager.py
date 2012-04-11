@@ -42,7 +42,7 @@ def serve(port):
                     mimetype = 'text/cache-manifest'
             return mimetype
 
-    os.chdir(os.path.join(os.path.dirname(__file__), './app/'))
+    os.chdir(os.path.join(os.path.dirname(__file__), './'))
     if not isinstance(port, int):
         port = 9999
     httpd = BaseHTTPServer.HTTPServer(("", port), MyHandler)
