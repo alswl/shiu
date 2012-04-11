@@ -39,8 +39,9 @@
 				self.app.startRead();
 				self.initIndexs();
 				self.bindChapterClick();
-				self.bindIndexBtnClick();
-				self.sidebar = new window.ui.Sidebar().init('#sidebar', self);
+				//self.bindIndexBtnClick();
+				self.sidebar = window.ui.Sidebar.init('#sidebar', self);
+				self.indexBtn = window.ui.IndexBtn.init('#sidebar .index_btn', self);
 			});
 		},
 
@@ -135,12 +136,12 @@
 				var y = e.clientY;
 				if (x < 100) {
 					self.app.preClick();
-					self.$indexBtn._hide();
+					self.indexBtn.hide();
 				} else if (x > 220) {
 					self.app.nextClick();
-					self.$indexBtn._hide();
+					self.indexBtn.hide();
 				} else {
-					self.$indexBtn._toggle();
+					self.indexBtn.toggle();
 				}
 			});
 		},
@@ -210,8 +211,7 @@
 })();
 
 (function() {
-	var Sidebar = function() {};
-	Sidebar.prototype = {
+	var Sidebar = {
 
 		init: function(selector, ui) {
 			var self = this;
@@ -222,15 +222,18 @@
 			return self;
 		},
 
-		hide: function() {
-			this.$.css('-webkit-transform','translate3d(0, 0, 0)');
-			this.$.css('-moz-transform','translate3d(0, 0, 0)');
+		fadeX: function(x) {
+			this.$.css('-webkit-transform','translate3d(' + x + 'px, 0, 0)');
+			this.$.css('-moz-transform','translate3d(' + x + ', 0, 0)');
+		},
+
+		hide: function() { // TODO 设计成分状态隐藏
+			this.fadeX(0);
 			this.$.css('background', 'none');
 		},
 
 		show: function() {
-			this.$.css('-webkit-transform','translate3d(320px, 0, 0)');
-			this.$.css('-moz-transform','translate3d(320px, 0, 0)');
+			this.fadeX(320);
 			this.$.css('background', 'transparent');
 		},
 
@@ -249,8 +252,8 @@
 		bindClick: function() {
 			var self = this;
 			self.$.click(function(e) {
-				if (e.clientX > 280) {
-					self.hide();
+				if (e.clientX - self.$.offset().left > 280) {
+				self.hide();
 				}
 			});
 		},
@@ -272,4 +275,44 @@ window.ui.Sidebar = Sidebar;
 })();
 
 (function() {
+	var IndexBtn = {
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.ui = ui;
+			self.bindClick();
+			return self;
+		},
+
+		hide: function() {
+			this.ui.sidebar.hide();
+		},
+
+		show: function() {
+			this.ui.sidebar.fadeX(40);
+		},
+
+		isVisiable: function() {
+			return this.$.offset().left >= 0;
+		},
+
+		toggle: function() {
+			if (this.isVisiable()){
+				this.hide();
+			} else {
+				this.show();
+			}
+		},
+
+		bindClick: function() {
+			var self = this;
+			self.$.click(function(e) {
+				self.ui.sidebar.toggle();
+				e.stopPropagation();
+			});
+		},
+
+	};
+	window.ui.IndexBtn = IndexBtn;
 })();
