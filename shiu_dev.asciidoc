@@ -1,0 +1,189 @@
+= Shiu 开发记录 =
+
+:author: alswl
+:email: alswlx@gmail.com
+:toc:
+:numbered:
+
+== 缘由 ==
+
+== 项目结构 ==
+
+== Html5 ==
+
+=== manifest ===
+
+Manifest 文件是用来配置需要缓存的或者一定要保持联网缓存的配置文件。
+
+记得加上 `version` 来手动控制文件的更新。
+
+----
+----
+
+* http://diveintohtml5.info/offline.html[Let’s Take This Offline]
+* http://www.mhtml5.com/resources/html5-js-api-教程（四）-离线应用[HTML5 JS API 教程（四） 离线应用]
+* http://developer.51cto.com/art/201009/227513.htm[HTML 5缓存机制：Cache Manifest配置实例]
+* http://www.w3schools.com/html5/att_html_manifest.asp[HTML5 <html> manifest Attribute]
+
+=== meta ===
+
+* viewport：设定移动设备视角，包括宽度、缩放、是否允许缩放
+http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web part 1)]
+* apple-mobile-web-app-capable：iOS 特有标签，表示使用全屏视图
+* format-detection 自动检查特定格式，比如电话号码
+* apple-mobile-web-app-status-bar-style 设定系统状态栏风格
+* iOS 特有标签查看
+http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
+
+`apple-mobile-web-app-capable` 模式下的点击阴影，使用
+`-webkit-tap-highlight-color: rgba(0,0,0,0);` 消除
+
+* http://stackoverflow.com/a/9784399/342757
+
+=== window.navigator.standalone ===
+
+检测 Web 页面 的 iPhone App 状态。
+
+* http://www.bennadel.com/blog/1950-Detecting-iPhone-s-App-Mode-Full-Screen-Mode-For-Web-Applications.htm[Detecting iPhone's App Mode (Full Screen Mode) For Web Applications]
+
+=== 本地存储 ===
+
+* Manifest
+* Web SQL Database * http://www.w3.org/TR/webdatabase/
+* LocalStorage 5M -> 10M http://stackoverflow.com/a/1923384/342757[Limit of localstorage on iPhone?]
+* SessionStorage
+* indexedDB
+
+iOS 5 localStorage 限制 5M，用户申请之后可以获取 10M。
+我现在解决办法是不放太长的书，分卷。
+可以考虑使用 Web SQL Database。
+
+* 
+
+=== app cache 事件 ===
+
+----
+var appCache = window.applicationCache;
+appCache.ondownloading = function () {
+	window.progresscount = 0
+};
+appCache.onprogress = function (e) {
+	var percent = "";
+	if (e && e.lengthComputable) {
+		percent = " " + Math.round(100 * e.loaded / e.total) + "%"
+	} else {
+		percent = Math.round(100 * (++progresscount / 8)) + "%"
+	}
+	$("#download .percent").text(percent);
+}
+----
+
+* http://ajax.sys-con.com/node/1643966/mobile[Using HTML5 Application Cache to Create Offline Web Applications]
+* http://www.cnblogs.com/ATree/archive/2012/03/13/HTML5-Storage-API.html[HTML5 存储API介绍]
+* http://handyxuefeng.blog.163.com/blog/static/45452172201111414317216/[初探--HTML5离线存储]
+* http://www.w3.org/TR/2011/WD-html5-20110525/offline.html[W3C - 5.6 Offline Web applications]
+
+=== 页面排版 ===
+
+Dom 切换 vs 多栏 `-webkit-column-width`
+
+* http://jsbin.com/ewozip/2/[多栏 Demo]
+* http://kmsm.ca/2010/an-almost-complete-guide-to-css3-multi-column-layouts/[An (Almost) Complete Guide to CSS3 Multi-column Layouts]
+
+获取分栏之后的栏位数目 `$('#content chapter > :last'.potion()` )。
+
+* http://stackoverflow.com/questions/8354786/determine-the-width-of-a-dynamic-css3-multicolumn-div-width-fixed-column-width[Determine the Width of a dynamic CSS3 Multicolumn DIV width fixed column-width]
+
+=== 动画切换 ===
+
+jQuery 实现 `jQuery.animate({'left': left}, 200)`
+
+CSS3 实现 `-moz-transition: left 201ms;`
+
+CSS3 WebGL 硬件加速实现
+
+----
+self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
+----
+
+* http://www.html5rocks.com/en/mobile/optimization-and-performance/[HTML5 Techniques for Optimizing Mobile Performance / HTML5 在移动端优化技巧]
+* http://www.turnjs.com/[模拟翻书效果的js库]
+
+=== Drag ===
+
+iScroll
+
+* http://cubiq.org/iscroll-4[iScroll 4]
+
+== JS ==
+
+=== Zepto ===
+
+http://zeptojs.com/[Zepto] 和 jQuery 完全兼容，并且更小。
+
+优点：
+
+* 更精简，加载更快
+* 只支持「现代浏览器」
+* 适合开发移动应用
+
+=== 结构设计 ===
+
+MCRV 结构设计。
+
+* http://www.baiduux.com/blog/2011/07/08/frontend-mcrv-design-pattern/[前端开发中的MCRV模式]
+
+参考孙峻文同学的 Behind Tetris5 系列
+
+* http://sunblog.72pines.com/behindtetris5-basic/
+* http://sunblog.72pines.com/behindtetris5-gamecore/
+* http://sunblog.72pines.com/behindtetris5-gameui/
+
+=== 触摸事件 ===
+
+阻止滚动：
+
+----
+http://127.0.0.1:9999/jiangye/
+----
+
+* https://developer.apple.com/library/safari/#documentation/UserExperience/Reference/TouchEventClassReference/TouchEvent/TouchEvent.html[Apple TouchEvent Class Reference]
+* http://select.yeeyan.org/view/213582/202991[针对多点触控浏览器进行的开发]
+
+=== 本地存储 ===
+
+* http://www.slideshare.net/sunnylqm/html5-10672394[Html5三种本地存储方式的比较]
+
+== 开发工具 ==
+
+=== manager.py ===
+
+受 Django / RoR 启发，我写了一个 Python 脚本 manager.py 用来管理项目，
+功能包括：启动一个静态服务器 / 转换图书格式。
+
+运行 `./manager.py -s -p <PORT>` 运行静态服务器，默认端口是9999。
+运行 `./manager.py --parse-txt ./book/src/jiangye/* --parse-txt-output ./book/jiangye.js`
+来转换文本格式。
+运行 `./manager.py --help` 可以查看到帮助。
+
+=== 调试工具 ===
+
+Chrome 隐身模式。
+
+Chorme Console
+
+iPhone Safari 调试控制台
+
+https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
+桌面下模拟点击的 jQuery 插件
+
+=== Github ===
+
+绑定自定义域名 `http://shiu.log4d.com` 。
+
+* http://help.github.com/pages/[GitHub Pages]
+
+== 参考资料 ==
+
+* http://sixrevisions.com/web-development/html5-iphone-app/[How to Make an HTML5 iPhone App]
+* http://mobilehtml5.org/[智能手机和平板中默认浏览器对HTML5和CSS3新技术的支持情况]

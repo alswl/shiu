@@ -1,0 +1,27 @@
+CACHE MANIFEST
+
+# Cache Manifest Version: 2310
+
+CACHE:
+
+../js/zepto.min.js
+../js/iscroll.js
+../js/common.js
+book.js
+../js/chapter.js
+../js/book.js
+../js/appui.js
+../js/app.js
+../js/shiu.js
+
+../style/style.css
+
+../image/cover.png
+../image/side_bg.png
+logo.jpg
+cover.jpg
+
+NETWORK:
+*
+
+# vim: set ft=conf:
