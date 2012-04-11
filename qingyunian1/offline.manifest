@@ -4,7 +4,7 @@ CACHE MANIFEST
 
 CACHE:
 
-../js/zepto.min.js
+../js/zepto.js
 ../js/iscroll.js
 ../js/common.js
 ../js/chapter.js
