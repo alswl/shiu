@@ -7,7 +7,6 @@ CACHE:
 ../js/zepto.min.js
 ../js/iscroll.js
 ../js/common.js
-book.js
 ../js/chapter.js
 ../js/book.js
 ../js/appui.js
