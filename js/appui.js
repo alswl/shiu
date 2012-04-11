@@ -217,7 +217,7 @@
 			var self = this;
 			self.$ = $(selector);
 			self.ui = ui;
-			self.bindClick();
+			self.bindTouchStart();
 			self.bindAClick();
 			return self;
 		},
@@ -249,11 +249,12 @@
 			}
 		},
 
-		bindClick: function() {
+		bindTouchStart: function() {
 			var self = this;
-			self.$.click(function(e) {
-				if (e.clientX - self.$.offset().left > 280) {
-				self.hide();
+			self.$.bind('touchstart', function(e) {
+				if (e.touches[0].clientX - self.$.offset().left > 280) {
+					self.hide();
+					return false;
 				}
 			});
 		},
