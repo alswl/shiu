@@ -33,8 +33,8 @@
 			$("body").bind('touchmove', function (e) { // 静止触摸反弹
 				e.preventDefault();
 			});
-			self.sidebar = Object.create(p.Sidebar.init('#sidebar', self));
-			self.indexBtn = Object.create(p.IndexBtn.init('#sidebar .index_btn', self));
+			self.sidebar = Object.create(p.Sidebar).init('#sidebar', self);
+			self.indexBtn = Object.create(p.IndexBtn).init('#sidebar .index_btn', self);
 			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
@@ -143,20 +143,20 @@
 			self.initIndexs();
 			self.bindTouchStart();
 			self.bindAClick();
+			//self.bindIndexsScroll();
 			return self;
 		},
 
 		initIndexs: function() {
 			var self = this;
-			self.$indexs.html(self.ui.app.book.getIndexsHtml());
-			self.bindIndexsScroll();
+			self.ui.$temp.html(self.ui.app.book.getIndexsHtml());
+			self.$indexs.append(self.ui.$temp.children());
 		},
 
 		// 目录滚动
 		bindIndexsScroll: function() {
-			new iScroll('index_wrapper', {});
+			this.iScroll = new iScroll('index_wrapper', {});
 		},
-	
 
 		fadeX: function(x) {
 			this.$.css('-webkit-transform','translate3d(' + x + 'px, 0, 0)');
@@ -169,6 +169,9 @@
 		},
 
 		show: function() {
+			if (this.iScroll === undefined) {
+				this.bindIndexsScroll(); // 延迟绑定
+			}
 			this.fadeX(320);
 			this.$.css('background', 'transparent');
 		},
