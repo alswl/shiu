@@ -119,7 +119,15 @@
 				}
 				return m;
 			});
-		}
+		},
+
+		// 是否 iPhone
+		isIphone: function () {
+			return (navigator.userAgent.match(/iPhone/i)) ||
+			(navigator.userAgent.match(/iPod/i)) ||
+			(navigator.userAgent.match(/iPad/i));
+		},
+
 	};
 
 	window.shiu.util = util;

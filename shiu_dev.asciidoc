@@ -116,6 +116,10 @@ iScroll
 延迟加载
 
 * http://cubiq.org/iscroll-4[iScroll 4]
+* http://www.sitepen.com/blog/2008/07/10/touching-and-gesturing-on-the-iphone/
+* http://www.html5rocks.com/en/mobile/touch/
+* https://dvcs.w3.org/hg/webevents/raw-file/tip/touchevents.html[Touch Events version 2 - W3C]
+* http://developer.apple.com/library/safari/#documentation/UserExperience/Reference/TouchEventClassReference/TouchEvent/TouchEvent.html#//apple_ref/doc/uid/TP40009358[TouchEvent Class Reference]
 
 == JS ==
 
@@ -176,8 +180,12 @@ Chorme Console
 
 iPhone Safari 调试控制台
 
-https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
+* https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
 桌面下模拟点击的 jQuery 插件
+
+* https://github.com/brian-c/phantom-limb[Debug 用的模拟 JS]
+
+* http://developer.apple.com/library/ios/#DOCUMENTATION/AppleApplications/Reference/SafariWebContent/DebuggingSafarioniPhoneContent/DebuggingSafarioniPhoneContent.html[iOS Safari Debug]
 
 === Github ===
 
@@ -189,3 +197,4 @@ https://github.com/dotmaster/Touchable-jQuery-Plugin[Touchable-jQuery-Plugin]
 
 * http://sixrevisions.com/web-development/html5-iphone-app/[How to Make an HTML5 iPhone App]
 * http://mobilehtml5.org/[智能手机和平板中默认浏览器对HTML5和CSS3新技术的支持情况]
+* http://www.html5rocks.com/en/mobile/mobifying/["Mobifying" Your HTML5 Site]

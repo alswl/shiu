@@ -38,7 +38,7 @@
 			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
-				//self.content.bindScroll(); // 延迟绑定
+				self.content.bindScroll(); // 延迟绑定
 			});
 		},
 
@@ -107,25 +107,12 @@
 
 		// 设定当前页面到指定页数
 		setPage: function(page) {
-			var self = this;
-			var left = 0 - page * (self.SCREEN_WIDTH + self.SCREEN_COLUMN_GAP);
-			if ($.browser.webkit) { // firefox for develop
-				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
-			}
-			//self.$chapter.css('left', left + 'px'); 效率低
-			self.$chapter.css('-webkit-transform','translate3d(' +
-				left + 'px, 0, 0)'); // 硬件加速
-			self.$chapter.css('-moz-transform','translate3d(' +
-				left + 'px, 0, 0)');
-
+			this.content.setPage(page);
 		},
 
 		// 获取章节总页码
 		getPageCount: function() {
-			return ($('.chapter *').last().offset().left -
-				this.SCREEN_PADDING) / (
-					this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP
-				) + 1;
+			return this.content.getPageCount();
 		}
 	};
 
@@ -271,10 +258,15 @@
 (function() {
 	var Content = {
 
+		CHAPTER_SELECTOR: '#content .chapter',
+
 		init: function(selector, ui) {
 			var self = this;
 			self.$ = $(selector);
+			self.$chapter = $(selector).find('.chapter');
 			self.ui = ui;
+			self.isTouchEvent = false;
+			self.isTouchLock = false;
 			self.bindClick();
 			return self;
 		},
@@ -284,30 +276,100 @@
 			self.$.click(function(e){
 				var x = e.clientX;
 				var y = e.clientY;
-				if (x < 100) {
-					self.ui.app.preClick();
-					self.ui.indexBtn.hide();
-				} else if (x > 220) {
-					self.ui.app.nextClick();
-					self.ui.indexBtn.hide();
-				} else {
-					self.ui.indexBtn.toggle();
+				if (!self.isTouchEvent) {
+					if (x < 100) {
+						self.ui.app.prePage();
+						self.ui.indexBtn.hide();
+					} else if (x > 220) {
+						self.ui.app.nextPage();
+						self.ui.indexBtn.hide();
+					} else {
+						self.ui.indexBtn.toggle();
+					}
 				}
 			});
 		},
 
 		bindScroll: function() {
 			var self = this;
-			new iScroll(self.$[0].id);
+			//new iScroll('content_wrapper', {
+				//hScroll: true,
+				//vScroll: true,
+			//});
+
+			self.$.bind('touchstart', function(e) {
+				self.startX = e.touches[0].pageX;
+				self.startLeft = self.$chapter.offset().left;
+			});
+
+			self.$.bind('touchmove', function(e) {
+				if (self.isTouchLock) { // 锁住
+					return false;
+				}
+				self.isTouchLock = true;
+				if (e.touches.length > 1) {
+					return false;
+				}
+				self.transformX(self.startLeft
+					- self.startX + e.touches[0].pageX);
+				self.isTouchLock = false;
+				//console.log('move: ' + e.touches[0].pageX);
+			});
+
+			self.$.bind('touchend', function(e) {
+				var offset = e.changedTouches[0].pageX - self.startX;
+				self.isTouchEvent = true;
+				if (offset < 0 && Math.abs(offset) >= 60) {
+					if (!self.ui.app.nextPage()) { // 判断是否有下一章
+						self.transformX(self.startLeft);
+					}
+				} else if (offset > 0 && Math.abs(offset) >= 60) {
+					if (!self.ui.app.prePage()) {
+						self.transformX(self.startLeft);
+					}
+				} else {
+					if (Math.abs(offset) < 10) { // 单击事件
+						self.isTouchEvent = false;
+					} 
+					self.transformX(self.startLeft); // 回退
+				}
+			});
+
+			self.$.bind('touchcancel', function(e) {
+				self.transformX(self.startLeft);
+				return false;
+			});
+		},
+
+		transformX: function(x) {
+			this.$chapter.css('-webkit-transform','translate3d(' +
+				x + 'px, 0, 0)'); // 硬件加速
+			this.$chapter.css('-moz-transform','translate3d(' +
+				x + 'px, 0, 0)');
 		},
 
 		setChapter: function(html) {
 			var self = this;
+			self.ui.app.info('载入中…', true);
 			self.ui.$temp.html(html);
 			self.$.children().remove();
 			self.$.append(self.ui.$temp.children());
-			self.ui.$chapter = $(self.ui.CHAPTER_SELECTOR);
+			self.$chapter = $(self.CHAPTER_SELECTOR);
 		},
+
+		setPage: function(page) {
+			var self = this;
+			var left = 0 - page *
+				(self.ui.SCREEN_WIDTH + self.ui.SCREEN_COLUMN_GAP);
+			self.transformX(left);
+		},
+
+		getPageCount: function() {
+			return (this.$chapter.children().last().offset().left -
+				this.ui.SCREEN_PADDING) / (
+					this.ui.SCREEN_WIDTH + this.ui.SCREEN_COLUMN_GAP
+				) + 1;
+		}
 
 	};
 

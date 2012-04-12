@@ -9,18 +9,11 @@
 			self.ui.init(self);
 		},
 
-		// 是否 iPhone
-		isIphone: function () {
-			return (navigator.userAgent.match(/iPhone/i)) ||
-			(navigator.userAgent.match(/iPod/i)) ||
-			(navigator.userAgent.match(/iPad/i));
-		},
-
 		// 启动应用
 		run: function() {
 			var self = this;
 			self.ui.displayHeroUnit();
-			if (!self.isIphone() && !window.shiu.DEBUG) { // 非 iOS 打开
+			if (!window.shiu.util.isIphone() && !window.shiu.DEBUG) { // 非 iOS 打开
 				self.error('请在iPhone/iPod Touch打开');
 			} else {
 				// 以独立应用打开
@@ -51,13 +44,12 @@
 
 		download: function() {
 			var self = this;
-			self.ui.displayDownload();
 			var appCache = window.applicationCache;
+			self.ui.displayDownload();
 			appCache.ondownloading = function () {
 				window.progresscount = 0;
 			};
 			appCache.onprogress = function(e) {
-				var self = this;
 				var percent = "";
 				if (e && e.lengthComputable) {
 					percent = Math.round(100 * e.loaded / e.total)
@@ -117,23 +109,29 @@
 		},
 
 		// 换页
-		preClick: function() {
+		prePage: function() {
 			var self = this;
 			if (self.book.getCurrentPage() > 0) {
 				self.book.setCurrentPage(self.book.getCurrentPage() - 1);
 				self.ui.setPage(self.book.getCurrentPage());
 			} else if (self.book.getCurrentChapterIndex() > 0){
 				self.preChapter();
+			} else {
+				return false;
 			}
+			return true;
 		},
-		nextClick: function() {
+		nextPage: function() {
 			var self = this;
 			if (self.book.getCurrentPage() < self.book.getPageCount() - 1) {
 				self.book.setCurrentPage(self.book.getCurrentPage() + 1);
 				self.ui.setPage(self.book.getCurrentPage());
 			} else if (self.book.getCurrentChapterIndex() < self.book.chapters.length - 1){
 				self.nextChapter();
+			} else {
+				return false;
 			}
+			return true;
 		},
 
 		// 换章
