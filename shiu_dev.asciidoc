@@ -113,6 +113,8 @@ self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // �
 
 iScroll
 
+延迟加载
+
 * http://cubiq.org/iscroll-4[iScroll 4]
 
 == JS ==

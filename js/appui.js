@@ -38,6 +38,7 @@
 			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
+				//self.content.bindScroll(); // 延迟绑定
 			});
 		},
 
@@ -143,7 +144,6 @@
 			self.initIndexs();
 			self.bindTouchStart();
 			self.bindAClick();
-			//self.bindIndexsScroll();
 			return self;
 		},
 
@@ -294,6 +294,11 @@
 					self.ui.indexBtn.toggle();
 				}
 			});
+		},
+
+		bindScroll: function() {
+			var self = this;
+			new iScroll(self.$[0].id);
 		},
 
 		setChapter: function(html) {
