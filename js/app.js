@@ -189,6 +189,9 @@
 				if(window.shiu.bookVersion > self.db.get('book_version')) {
 					if (confirm('有最新版本书籍数据更新')) {
 						self.ui.displayHeroUnit();
+						self.downloadCallback = function() {
+							window.location.reload();
+						};
 						self.download();
 					} else {
 						self.info(
