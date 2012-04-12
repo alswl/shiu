@@ -1,7 +1,7 @@
 (function() {
 	var App = {
 		// constants
-		ui: window.ui.AppUi,
+		ui: window.shiu.ui.AppUi,
 		book: null,
 
 		// constructor
@@ -21,10 +21,12 @@
 		run: function() {
 			var self = this;
 			self.ui.displayHeroUnit();
-			if (!self.isIphone() && !DEBUG) { // 非 iOS 打开
+			if (!self.isIphone() && !window.shiu.DEBUG) { // 非 iOS 打开
 				self.error('请在iPhone/iPod Touch打开');
 			} else {
-				if (window.navigator.standalone || (DEBUG === true && DEBUG_MODE === 'standalone')) { // 以独立应用打开
+				// 以独立应用打开
+				if (window.navigator.standalone ||
+					(window.shiu.DEBUG === true && window.shiu.DEBUG_MODE === 'standalone')) {
 					if (!self.loadBook()) { // 书籍不存在
 						self.error('书籍数据不存在，开始重新下载');
 						self.downloadCallback = function() {
@@ -34,7 +36,7 @@
 					} else { // 开始阅读
 						self.info('请单击开始阅读', true);
 						book = self.loadBook();
-						self.book = Book.init(self.loadBook());
+						self.book = window.shiu.model.Book.init(self.loadBook());
 						delete(book);
 						self.ui.displayStandalone();
 						self.bindOrientate();
@@ -55,10 +57,25 @@
 			appCache.ondownloading = function () {
 				window.progresscount = 0;
 			};
-			appCache.onprogress = self.ui.onCacheProgress;
-			appCache.oncached  = self.ui.cacheOnCached;
-			appCache.onnoupdate  = self.ui.onCacheNoUpdate;
-			appCache.onupdateready = self.ui.cacheOnCached;
+			appCache.onprogress = function(e) {
+				var self = this;
+				var percent = "";
+				if (e && e.lengthComputable) {
+					percent = Math.round(100 * e.loaded / e.total)
+				} else {
+					percent = Math.round(100 * (++progresscount / 8)) 
+				}
+				self.ui.updateDownloadPercent(percent);
+			};
+			var onCached = function(e) {
+				self.success('下载完成', true);
+				self.saveBook(window.book); // 这时的 this 是 window.localstorage
+				self.ui.updateDownloadComplete();
+				self.downloadCallback();
+			};
+			appCache.oncached  = onCached;
+			appCache.onnoupdate  = onCached;
+			appCache.onupdateready = onCached;
 
 			self.loadBookJs();
 		},
@@ -155,6 +172,6 @@
 		}
 	};
 
-	window.App = App;
+	window.shiu.App = App;
 })();
 

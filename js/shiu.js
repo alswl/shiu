@@ -5,9 +5,9 @@ $(function() {
 	if (DEBUG && DEBUG_MODE == 'standalone') {
 		window.navigator.standalone = true;
 	}
-	window.DEBUG = DEBUG;
-	window.DEBUG_MODE = DEBUG_MODE;
+	window.shiu.DEBUG = DEBUG;
+	window.shiu.DEBUG_MODE = DEBUG_MODE;
 
-	App.init();
-	App.run();
+	shiu.App.init();
+	shiu.App.run();
 });

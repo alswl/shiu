@@ -5,9 +5,7 @@
 		$content: $('#content'),
 		$alert: $('#alert'),
 		$temp: $('#temp'),
-		$sidebar: $('#sidebar'),
 		$indexs: $('#indexs'),
-		$indexBtn: $('#sidebar .index_btn'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
@@ -39,9 +37,8 @@
 				self.app.startRead();
 				self.initIndexs();
 				self.bindChapterClick();
-				//self.bindIndexBtnClick();
-				self.sidebar = window.ui.Sidebar.init('#sidebar', self);
-				self.indexBtn = window.ui.IndexBtn.init('#sidebar .index_btn', self);
+				self.sidebar = window.shiu.ui.Sidebar.init('#sidebar', self);
+				self.indexBtn = window.shiu.ui.IndexBtn.init('#sidebar .index_btn', self);
 			});
 		},
 
@@ -75,34 +72,16 @@
 			this.setPage(0);
 		},
 
-		// 缓存事件绑定
-		onCacheProgress: function(e) {
-			var self = this;
-			var percent = "";
-			if (e && e.lengthComputable) {
-				percent = Math.round(100 * e.loaded / e.total)
-			} else {
-				percent = Math.round(100 * (++progresscount / 8)) 
-			}
+		// 更新下载百分比
+		updateDownloadPercent: function(percent) {
 			$("#download .percent").text(percent);
 		},
 
-		cacheOnCached: function(e) {
-			App.success('下载完成', true);
-			App.saveBook(window.book); // 这时的 this 是 window.localstorage
-			$("#download .percent").text('100');
+		// 下载完成
+		updateDownloadComplete: function() {
+			this.updateDownloadPercent(100);
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
-			App.downloadCallback();
-		},
-
-		onCacheNoUpdate: function() {
-			App.success('下载完成', true);
-			App.saveBook(window.book); // 这时的 this 是 window.localstorage
-			$("#download .percent").text('100');
-			$("#download .tip").text("下载完成");
-			$("#download .complete").show();
-			App.downloadCallback();
 		},
 
 		alert: function(message, level, delay) {
@@ -121,8 +100,8 @@
 				});
 			} else {
 				setTimeout(function() {
-					App.ui.$alert.hide();
-					App.ui.$alert.children().html('').removeClass();
+					self.$alert.hide();
+					self.$alert.children().html('').removeClass();
 					}, 3000
 				);
 			}
@@ -146,35 +125,6 @@
 			});
 		},
 
-		// 目录显示/隐藏按钮
-		bindIndexBtnClick: function() {
-			var self = this;
-
-			// 绑定「目录按钮」自定义方法
-			self.$indexBtn._hide = function() { // 隐藏
-				self.sidebar.hide();
-			};
-			self.$indexBtn._show = function() { // 显示
-				self.$sidebar.css('-webkit-transform','translate3d(40px, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(40px, 0, 0)');
-			};
-			self.$indexBtn._isVisiable = function() {
-				return this.offset().left >= 0;
-			};
-			self.$indexBtn._toggle = function() {
-				if (this._isVisiable()){
-					this._hide();
-				} else {
-					this._show();
-				}
-			};
-
-			self.$indexBtn.click(function(e) {
-				self.sidebar.toggle();
-				e.stopPropagation();
-			});
-		},
-
 		// 目录滚动
 		bindIndexsScroll: function() {
 			new iScroll('index_wrapper', {});
@@ -188,8 +138,10 @@
 				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
 			}
 			//self.$chapter.css('left', left + 'px'); 效率低
-			self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
-			self.$chapter.css('-moz-transform','translate3d(' + left + 'px, 0, 0)');
+			self.$chapter.css('-webkit-transform','translate3d(' +
+				left + 'px, 0, 0)'); // 硬件加速
+			self.$chapter.css('-moz-transform','translate3d(' +
+				left + 'px, 0, 0)');
 
 		},
 
@@ -203,11 +155,14 @@
 
 		// 获取章节总页码
 		getPageCount: function() {
-			return ($('.chapter *').last().offset().left - this.SCREEN_PADDING) / (this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP) + 1;
+			return ($('.chapter *').last().offset().left -
+				this.SCREEN_PADDING) / (
+					this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP
+				) + 1;
 		}
 	};
 
-	window.ui.AppUi = AppUi;
+	window.shiu.ui.AppUi = AppUi;
 })();
 
 (function() {
@@ -271,8 +226,7 @@
 
 	};
 
-window.ui.Sidebar = Sidebar;
-
+	window.shiu.ui.Sidebar = Sidebar;
 })();
 
 (function() {
@@ -323,5 +277,6 @@ window.ui.Sidebar = Sidebar;
 		},
 
 	};
-	window.ui.IndexBtn = IndexBtn;
+
+	window.shiu.ui.IndexBtn = IndexBtn;
 })();

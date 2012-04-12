@@ -8,7 +8,9 @@
 			self.author = book.author;
 			self.chapters = [];
 			for (var i = 0; i < book.chapters.length; i++) {
-				var chapter = new Chapter().init(book.chapters[i].title, book.chapters[i].content, i);
+				var chapter = new window.shiu.model.Chapter().init(
+					book.chapters[i].title, book.chapters[i].content, i
+				);
 				self.chapters.push(chapter);
 			}
 			return self;
@@ -57,11 +59,13 @@
 			var self = this;
 			var html = ''
 			for (var i = 0; i < self.chapters.length; i++) {
-				html += '<li><a href="javascript:;" rel="'+ i + '">'+ self.chapters[i].getCnIndex() + self.chapters[i].title + '</a></li>';
+				html += '<li><a href="javascript:;" rel="'+ i + '">' +
+					self.chapters[i].getCnIndex() + self.chapters[i].title +
+					'</a></li>';
 			}
 			return html;
 		},
 	};
 
-	window.Book = Book;
+	window.shiu.model.Book = Book;
 })();

@@ -1,4 +1,10 @@
 (function() {
+	window.shiu = {};
+	window.shiu.ui = {};
+	window.shiu.model = {};
+})();
+
+(function() {
  	var Db = {
 
 		init: function prepareDatabase(ready, error) {
@@ -106,10 +112,5 @@
 		}
 	};
 
-	window.util = util;
+	window.shiu.util = util;
 })();
-
-(function() {
-	window.ui = {};
-})();
-
