@@ -1,7 +1,17 @@
 (function() {
+ 	// 定义包名
 	window.shiu = {};
 	window.shiu.ui = {};
 	window.shiu.model = {};
+
+	// 避免使用 new 关键字
+	if (typeof Object.create !== 'function') {
+		Object.create = function (o) {
+			function F() {}
+			F.prototype = o;
+			return new F();
+		};
+	}
 })();
 
 (function() {

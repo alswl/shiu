@@ -1,11 +1,10 @@
+// AppUi
 (function() {
 	var AppUi = {
 		//类成员
 		$heroUnit: $('#hero_unit'),
-		$content: $('#content'),
 		$alert: $('#alert'),
 		$temp: $('#temp'),
-		$indexs: $('#indexs'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
@@ -30,27 +29,21 @@
 
 		displayStandalone: function() {
 			var self = this;
+			var p = window.shiu.ui;
 			$("body").bind('touchmove', function (e) { // 静止触摸反弹
 				e.preventDefault();
 			});
+			self.sidebar = Object.create(p.Sidebar.init('#sidebar', self));
+			self.indexBtn = Object.create(p.IndexBtn.init('#sidebar .index_btn', self));
+			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
-				self.initIndexs();
-				self.bindChapterClick();
-				self.sidebar = window.shiu.ui.Sidebar.init('#sidebar', self);
-				self.indexBtn = window.shiu.ui.IndexBtn.init('#sidebar .index_btn', self);
 			});
 		},
 
 		displayRead: function() {
 			this.$heroUnit.hide();
 			$('#main').show();
-		},
-
-		initIndexs: function() {
-			var self = this;
-			self.$indexs.html(self.app.book.getIndexsHtml());
-			self.bindIndexsScroll();
 		},
 
 		// 设定横屏 / 适应尺寸 // TODO
@@ -107,29 +100,10 @@
 			}
 		},
 
-		// 书籍内容页面单击事件
-		bindChapterClick: function() {
-			var self = this;
-			self.$content.click(function(e){
-				var x = e.clientX;
-				var y = e.clientY;
-				if (x < 100) {
-					self.app.preClick();
-					self.indexBtn.hide();
-				} else if (x > 220) {
-					self.app.nextClick();
-					self.indexBtn.hide();
-				} else {
-					self.indexBtn.toggle();
-				}
-			});
+		setChapter: function(html) {
+			this.content.setChapter(html);
 		},
 
-		// 目录滚动
-		bindIndexsScroll: function() {
-			new iScroll('index_wrapper', {});
-		},
-	
 		// 设定当前页面到指定页数
 		setPage: function(page) {
 			var self = this;
@@ -145,14 +119,6 @@
 
 		},
 
-		setChapter: function(html) {
-			this.$temp.html(html);
-			this.$content.children().remove();
-			this.$content.append(this.$temp.children());
-			//this.$content.children().first().remove();
-			this.$chapter = $(this.CHAPTER_SELECTOR);
-		},
-
 		// 获取章节总页码
 		getPageCount: function() {
 			return ($('.chapter *').last().offset().left -
@@ -165,6 +131,7 @@
 	window.shiu.ui.AppUi = AppUi;
 })();
 
+// 侧边栏
 (function() {
 	var Sidebar = {
 
@@ -172,14 +139,28 @@
 			var self = this;
 			self.$ = $(selector);
 			self.ui = ui;
+			self.$indexs = $('#indexs');
+			self.initIndexs();
 			self.bindTouchStart();
 			self.bindAClick();
 			return self;
 		},
 
+		initIndexs: function() {
+			var self = this;
+			self.$indexs.html(self.ui.app.book.getIndexsHtml());
+			self.bindIndexsScroll();
+		},
+
+		// 目录滚动
+		bindIndexsScroll: function() {
+			new iScroll('index_wrapper', {});
+		},
+	
+
 		fadeX: function(x) {
 			this.$.css('-webkit-transform','translate3d(' + x + 'px, 0, 0)');
-			this.$.css('-moz-transform','translate3d(' + x + ', 0, 0)');
+			this.$.css('-moz-transform','translate3d(' + x + 'px, 0, 0)');
 		},
 
 		hide: function() { // TODO 设计成分状态隐藏
@@ -229,6 +210,7 @@
 	window.shiu.ui.Sidebar = Sidebar;
 })();
 
+// 目录菜单按钮
 (function() {
 	var IndexBtn = {
 
@@ -249,7 +231,8 @@
 		},
 
 		isVisiable: function() {
-			return this.$.offset().left >= 0;
+			// Mozilla 这时 left 会误判
+			return this.ui.sidebar.$.offset().left >= -280;
 		},
 
 		toggle: function() {
@@ -269,7 +252,7 @@
 			});
 		},
 
-		bindDragEnd: function() { // TODO 用 iScroll 实现拖拽
+		bindDragEnd: function() { // TODO 暂时不用
 			var self = this;
 			self.$.ondragend = function(e) {
 				self.ui.sidebar.show();
@@ -279,4 +262,46 @@
 	};
 
 	window.shiu.ui.IndexBtn = IndexBtn;
+})();
+
+// 书籍内容模块 Content
+(function() {
+	var Content = {
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.ui = ui;
+			self.bindClick();
+			return self;
+		},
+
+		bindClick: function() {
+			var self= this;
+			self.$.click(function(e){
+				var x = e.clientX;
+				var y = e.clientY;
+				if (x < 100) {
+					self.ui.app.preClick();
+					self.ui.indexBtn.hide();
+				} else if (x > 220) {
+					self.ui.app.nextClick();
+					self.ui.indexBtn.hide();
+				} else {
+					self.ui.indexBtn.toggle();
+				}
+			});
+		},
+
+		setChapter: function(html) {
+			var self = this;
+			self.ui.$temp.html(html);
+			self.$.children().remove();
+			self.$.append(self.ui.$temp.children());
+			self.ui.$chapter = $(self.ui.CHAPTER_SELECTOR);
+		},
+
+	};
+
+	window.shiu.ui.Content = Content;
 })();

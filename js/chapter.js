@@ -1,8 +1,5 @@
 (function() {
-	var Chapter = function () {
-		var self = this;
-	};
-    Chapter.prototype = {
+	var Chapter = {
         init: function(title, content, index) {
 			this.title = title;
 			this.content = content;

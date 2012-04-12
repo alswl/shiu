@@ -1,12 +1,11 @@
 (function() {
 	var App = {
 		// constants
-		ui: window.shiu.ui.AppUi,
-		book: null,
 
 		// constructor
         init: function () {
 			var self = this;
+			self.ui = Object.create(window.shiu.ui.AppUi);
 			self.ui.init(self);
 		},
 

@@ -8,7 +8,7 @@
 			self.author = book.author;
 			self.chapters = [];
 			for (var i = 0; i < book.chapters.length; i++) {
-				var chapter = new window.shiu.model.Chapter().init(
+				var chapter = Object.create(window.shiu.model.Chapter).init(
 					book.chapters[i].title, book.chapters[i].content, i
 				);
 				self.chapters.push(chapter);

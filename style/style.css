@@ -137,6 +137,7 @@ body {
 #alert strong {
 	border-radius: 5px;
 	padding: 2px;
+	font-size: 16px;
 }
 #alert strong.success {
 	background-color: #DFF0D8;
