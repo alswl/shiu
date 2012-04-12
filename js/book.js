@@ -27,7 +27,7 @@
 		getCurrentPage: function() {
 			var self = this;
 			var page = self.db.get(self.title + '_currentPage');
-			if (page === null) {
+			if (page === null || page > self.getPageCount()) {
 				page = 0;
 			}
 			return page;
@@ -53,7 +53,7 @@
 		getCurrentChapterIndex: function() {
 			var self = this;
 			index = self.db.get(self.title + '_currentChapterIndex');
-			if (index === null) {
+			if (index === null || index > self.chapters.length) {
 				index = 0;
 			}
 			return index;
