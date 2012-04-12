@@ -107,7 +107,9 @@ class Chapter(object):
             title = l[0]
             content = reduce(lambda x, y: x + '\r' + y, l[1:])
         except IndexError:
-            raise ValueError # TODO add
+            logging.error('内容有问题 编号 %s 标题 %s' %(index, title))
+        except TypeError as e:
+            logging.error('内容有问题 编号 %s 标题 %s' %(index, title))
         return Chapter(title, content, index)
 
 def main():

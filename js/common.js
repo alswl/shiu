@@ -1,8 +1,9 @@
 (function() {
  	// 定义包名
 	window.shiu = {};
-	window.shiu.ui = {};
+	window.shiu.db = {};
 	window.shiu.model = {};
+	window.shiu.ui = {};
 
 	// 避免使用 new 关键字
 	if (typeof Object.create !== 'function') {
@@ -12,11 +13,16 @@
 			return new F();
 		};
 	}
+
+	Date.prototype.toInt = function() {
+		return parseInt('' + this.getFullYear() + this.getMonth() + this.getDate(), 10);
+	};
 })();
 
 (function() {
  	var Db = {
 
+		/*
 		init: function prepareDatabase(ready, error) {
 			return openDatabase('documents', '1.0', 'Offline document storage', 50*1024*1024, function (db) {
 				db.changeVersion('', '1.0', function (t) {
@@ -24,6 +30,7 @@
 				}, error);
 			});
 		},
+		*/
 
 		get: function(key) {
 			try {
@@ -47,7 +54,7 @@
 	}
 
 
-	window.db = Db;
+	window.shiu.db.Db = Db;
 })();
 
 (function() {

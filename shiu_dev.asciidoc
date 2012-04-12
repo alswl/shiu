@@ -7,6 +7,8 @@
 
 == 缘由 ==
 
+受「http://yishu.cnbang.net/[伊书 by @bang]」启发。
+
 == 项目结构 ==
 
 == Html5 ==
@@ -42,7 +44,7 @@ http://developer.apple.com/library/safari/#documentation/appleapplications/refer
 
 === window.navigator.standalone ===
 
-检测 Web 页面 的 iPhone App 状态。
+检测 Web 页面 的 iPhone 是否 App 运行状态。
 
 * http://www.bennadel.com/blog/1950-Detecting-iPhone-s-App-Mode-Full-Screen-Mode-For-Web-Applications.htm[Detecting iPhone's App Mode (Full Screen Mode) For Web Applications]
 
@@ -55,27 +57,21 @@ http://developer.apple.com/library/safari/#documentation/appleapplications/refer
 * indexedDB
 
 iOS 5 localStorage 限制 5M，用户申请之后可以获取 10M。
-我现在解决办法是不放太长的书，分卷。
+我现在解决办法是不放太长的书 + 分卷。
 可以考虑使用 Web SQL Database。
-
-* 
 
 === app cache 事件 ===
 
 ----
-var appCache = window.applicationCache;
-appCache.ondownloading = function () {
-	window.progresscount = 0
-};
-appCache.onprogress = function (e) {
+appCache.onprogress = function(e) {
 	var percent = "";
 	if (e && e.lengthComputable) {
-		percent = " " + Math.round(100 * e.loaded / e.total) + "%"
+		percent = Math.round(100 * e.loaded / e.total)
 	} else {
-		percent = Math.round(100 * (++progresscount / 8)) + "%"
+		percent = Math.round(100 * (++progresscount / 8)) 
 	}
-	$("#download .percent").text(percent);
-}
+	self.ui.updateDownloadPercent(percent);
+};
 ----
 
 * http://ajax.sys-con.com/node/1643966/mobile[Using HTML5 Application Cache to Create Offline Web Applications]
@@ -96,11 +92,11 @@ Dom 切换 vs 多栏 `-webkit-column-width`
 
 === 动画切换 ===
 
-jQuery 实现 `jQuery.animate({'left': left}, 200)`
+jQuery 实现 `jQuery.animate({'left': left}, 200)` 卡
 
-CSS3 实现 `-moz-transition: left 201ms;`
+CSS3 实现 `-moz-transition: left 201ms;` 卡
 
-CSS3 WebGL 硬件加速实现
+CSS3 WebGL 硬件加速实现 不错
 
 ----
 self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
@@ -111,9 +107,9 @@ self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // �
 
 === Drag ===
 
-iScroll
+iScroll 用来模拟原生应用的拉屏效果。
 
-延迟加载
+iScroll 需要延迟加载。
 
 * http://cubiq.org/iscroll-4[iScroll 4]
 * http://www.sitepen.com/blog/2008/07/10/touching-and-gesturing-on-the-iphone/
@@ -137,9 +133,11 @@ http://zeptojs.com/[Zepto] 和 jQuery 完全兼容，并且更小。
 
 MCRV 结构设计。
 
+Shiu 拆分了 App / Model / Ui / UiCompent / Db / Util
+
 * http://www.baiduux.com/blog/2011/07/08/frontend-mcrv-design-pattern/[前端开发中的MCRV模式]
 
-参考孙峻文同学的 Behind Tetris5 系列
+孙峻文同学的 Behind Tetris5 系列
 
 * http://sunblog.72pines.com/behindtetris5-basic/
 * http://sunblog.72pines.com/behindtetris5-gamecore/
