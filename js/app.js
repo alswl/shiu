@@ -1,30 +1,24 @@
 (function() {
 	var App = {
 		// constants
-		ui: AppUi,
-		book: null,
 
 		// constructor
         init: function () {
 			var self = this;
+			self.ui = Object.create(window.shiu.ui.AppUi);
 			self.ui.init(self);
-		},
-
-		// 是否 iPhone
-		isIphone: function () {
-			return (navigator.userAgent.match(/iPhone/i)) ||
-			(navigator.userAgent.match(/iPod/i)) ||
-			(navigator.userAgent.match(/iPad/i));
 		},
 
 		// 启动应用
 		run: function() {
 			var self = this;
 			self.ui.displayHeroUnit();
-			if (!self.isIphone() && !DEBUG) { // 非 iOS 打开
+			if (!window.shiu.util.isIphone() && !window.shiu.DEBUG) { // 非 iOS 打开
 				self.error('请在iPhone/iPod Touch打开');
 			} else {
-				if (window.navigator.standalone || (DEBUG === true && DEBUG_MODE === 'standalone')) { // 以独立应用打开
+				// 以独立应用打开
+				if (window.navigator.standalone ||
+					(window.shiu.DEBUG === true && window.shiu.DEBUG_MODE === 'standalone')) {
 					if (!self.loadBook()) { // 书籍不存在
 						self.error('书籍数据不存在，开始重新下载');
 						self.downloadCallback = function() {
@@ -34,7 +28,7 @@
 					} else { // 开始阅读
 						self.info('请单击开始阅读', true);
 						book = self.loadBook();
-						self.book = Book.init(self.loadBook());
+						self.book = window.shiu.model.Book.init(self.loadBook());
 						delete(book);
 						self.ui.displayStandalone();
 						self.bindOrientate();
@@ -50,15 +44,29 @@
 
 		download: function() {
 			var self = this;
-			self.ui.displayDownload();
 			var appCache = window.applicationCache;
+			self.ui.displayDownload();
 			appCache.ondownloading = function () {
 				window.progresscount = 0;
 			};
-			appCache.onprogress = self.ui.onCacheProgress;
-			appCache.oncached  = self.ui.cacheOnCached;
-			appCache.onnoupdate  = self.ui.onCacheNoUpdate;
-			appCache.onupdateready = self.ui.cacheOnCached;
+			appCache.onprogress = function(e) {
+				var percent = "";
+				if (e && e.lengthComputable) {
+					percent = Math.round(100 * e.loaded / e.total)
+				} else {
+					percent = Math.round(100 * (++progresscount / 8)) 
+				}
+				self.ui.updateDownloadPercent(percent);
+			};
+			var onCached = function(e) {
+				self.success('下载完成', true);
+				self.saveBook(window.book); // 这时的 this 是 window.localstorage
+				self.ui.updateDownloadComplete();
+				self.downloadCallback();
+			};
+			appCache.oncached  = onCached;
+			appCache.onnoupdate  = onCached;
+			appCache.onupdateready = onCached;
 
 			self.loadBookJs();
 		},
@@ -101,23 +109,29 @@
 		},
 
 		// 换页
-		preClick: function() {
+		prePage: function() {
 			var self = this;
 			if (self.book.getCurrentPage() > 0) {
 				self.book.setCurrentPage(self.book.getCurrentPage() - 1);
 				self.ui.setPage(self.book.getCurrentPage());
 			} else if (self.book.getCurrentChapterIndex() > 0){
 				self.preChapter();
+			} else {
+				return false;
 			}
+			return true;
 		},
-		nextClick: function() {
+		nextPage: function() {
 			var self = this;
 			if (self.book.getCurrentPage() < self.book.getPageCount() - 1) {
 				self.book.setCurrentPage(self.book.getCurrentPage() + 1);
 				self.ui.setPage(self.book.getCurrentPage());
 			} else if (self.book.getCurrentChapterIndex() < self.book.chapters.length - 1){
 				self.nextChapter();
+			} else {
+				return false;
 			}
+			return true;
 		},
 
 		// 换章
@@ -155,6 +169,6 @@
 		}
 	};
 
-	window.App = App;
+	window.shiu.App = App;
 })();
 

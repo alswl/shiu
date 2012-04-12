@@ -1,4 +1,20 @@
 (function() {
+ 	// 定义包名
+	window.shiu = {};
+	window.shiu.ui = {};
+	window.shiu.model = {};
+
+	// 避免使用 new 关键字
+	if (typeof Object.create !== 'function') {
+		Object.create = function (o) {
+			function F() {}
+			F.prototype = o;
+			return new F();
+		};
+	}
+})();
+
+(function() {
  	var Db = {
 
 		init: function prepareDatabase(ready, error) {
@@ -30,7 +46,12 @@
 		},
 	}
 
-	var Util = {
+
+	window.db = Db;
+})();
+
+(function() {
+	var util = {
 		/**
 		 * 数字转中文
 		 *
@@ -98,9 +119,16 @@
 				}
 				return m;
 			});
-		}
+		},
+
+		// 是否 iPhone
+		isIphone: function () {
+			return (navigator.userAgent.match(/iPhone/i)) ||
+			(navigator.userAgent.match(/iPod/i)) ||
+			(navigator.userAgent.match(/iPad/i));
+		},
+
 	};
 
-	window.db = Db;
-	window.Util = Util;
+	window.shiu.util = util;
 })();

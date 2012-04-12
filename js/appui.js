@@ -1,13 +1,10 @@
+// AppUi
 (function() {
 	var AppUi = {
 		//类成员
 		$heroUnit: $('#hero_unit'),
-		$content: $('#content'),
 		$alert: $('#alert'),
 		$temp: $('#temp'),
-		$sidebar: $('#sidebar'),
-		$indexs: $('#indexs'),
-		$indexBtn: $('#sidebar .index_btn'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
 		SCREEN_WIDTH: 320,
@@ -22,38 +19,32 @@
 
 		// 浏览模式
 		displayHeroUnit: function () {
-			$('#hero_unit').show();
+			this.$heroUnit.show();
 		},
 
 		displayDownload: function() {
-			$('#hero_unit .book_desc').css('height', '120px');
+			this.$heroUnit.find('.book_desc').css('height', '120px');
 			$('#download').show();
 		},
 
 		displayStandalone: function() {
 			var self = this;
+			var p = window.shiu.ui;
 			$("body").bind('touchmove', function (e) { // 静止触摸反弹
 				e.preventDefault();
 			});
+			self.sidebar = Object.create(p.Sidebar).init('#sidebar', self);
+			self.indexBtn = Object.create(p.IndexBtn).init('#sidebar .index_btn', self);
+			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function() {
 				self.app.startRead();
-				self.initIndexs();
-				self.bindChapterClick();
-				self.bindIndexBtnClick();
-				self.bindSidebarClick();
-				self.bindIndexAClick();
+				self.content.bindScroll(); // 延迟绑定
 			});
 		},
 
 		displayRead: function() {
 			this.$heroUnit.hide();
 			$('#main').show();
-		},
-
-		initIndexs: function() {
-			var self = this;
-			self.$indexs.html(self.app.book.getIndexsHtml());
-			self.bindIndexsScroll();
 		},
 
 		// 设定横屏 / 适应尺寸 // TODO
@@ -75,34 +66,16 @@
 			this.setPage(0);
 		},
 
-		// 缓存事件绑定
-		onCacheProgress: function(e) {
-			var self = this;
-			var percent = "";
-			if (e && e.lengthComputable) {
-				percent = Math.round(100 * e.loaded / e.total)
-			} else {
-				percent = Math.round(100 * (++progresscount / 8)) 
-			}
+		// 更新下载百分比
+		updateDownloadPercent: function(percent) {
 			$("#download .percent").text(percent);
 		},
 
-		cacheOnCached: function(e) {
-			App.success('下载完成', true);
-			App.saveBook(window.book); // 这时的 this 是 window.localstorage
-			$("#download .percent").text('100');
+		// 下载完成
+		updateDownloadComplete: function() {
+			this.updateDownloadPercent(100);
 			$("#download .tip").text("下载完成");
 			$("#download .complete").show();
-			App.downloadCallback();
-		},
-
-		onCacheNoUpdate: function() {
-			App.success('下载完成', true);
-			App.saveBook(window.book); // 这时的 this 是 window.localstorage
-			$("#download .percent").text('100');
-			$("#download .tip").text("下载完成");
-			$("#download .complete").show();
-			App.downloadCallback();
 		},
 
 		alert: function(message, level, delay) {
@@ -121,136 +94,284 @@
 				});
 			} else {
 				setTimeout(function() {
-					App.ui.$alert.hide();
-					App.ui.$alert.children().html('').removeClass();
+					self.$alert.hide();
+					self.$alert.children().html('').removeClass();
 					}, 3000
 				);
 			}
 		},
 
-		// 书籍内容页面单击事件
-		bindChapterClick: function() {
-			var self = this;
-			self.$content.click(function(e){
-				var x = e.clientX;
-				var y = e.clientY;
-				if (x < 100) {
-					self.app.preClick();
-					self.$indexBtn._hide();
-				} else if (x > 220) {
-					self.app.nextClick();
-					self.$indexBtn._hide();
-				} else {
-					self.$indexBtn._toggle();
-				}
-			});
+		setChapter: function(html) {
+			this.content.setChapter(html);
 		},
 
-		// 目录显示/隐藏按钮
-		bindIndexBtnClick: function() {
-			var self = this;
-
-			self.$indexBtn._hide = function() { // 隐藏
-				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
-			};
-			self.$indexBtn._show = function() { // 显示
-				self.$sidebar.css('-webkit-transform','translate3d(40px, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(40px, 0, 0)');
-			};
-			self.$indexBtn._toggle = function() {
-				if (self.$indexBtn.offset().left < 0) {
-					self.$indexBtn._show();
-				} else {
-					self.$indexBtn._hide();
-				}
-			};
-
-			self.$indexBtn.click(function(e) {
-				self.$sidebar._toggle();
-				e.stopPropagation();
-			});
-		},
-
-		// 目录点击
-		bindIndexAClick: function() {
-			var self = this;
-
-			self.$indexs.find('li a').click(
-				function(e) {
-					self.app.book.setCurrentChapterIndex(parseInt(this.rel, 10));
-					self.app.setChapter();
-					//e.stopPropagation();
-					return false;
-				}
-			);
-		},
-
-		// 侧边栏点击
-		bindSidebarClick: function() {
-			var self = this;
-			self.$sidebar._hide = function() { // 隐藏
-				self.$sidebar.css('-webkit-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(0, 0, 0)');
-				self.$sidebar.css('background', 'none');
-			};
-			self.$sidebar._show = function() { // 显示
-				self.$sidebar.css('-webkit-transform','translate3d(320px, 0, 0)');
-				self.$sidebar.css('-moz-transform','translate3d(320px, 0, 0)');
-				self.$sidebar.css('background', 'transparent');
-			};
-			self.$sidebar._toggle = function() {
-				if (self.$sidebar.offset().left < 0) {
-					self.$sidebar._show();
-				} else {
-					self.$sidebar._hide();
-				}
-			};
-
-			self.$sidebar.click(function(e) {
-				if (e.clientX > 280) {
-					if (self.$sidebar.offset().left < 0) {
-						//self.$content.click();
-					} else {
-						self.$sidebar._hide();
-					}
-				}
-				self.$indexBtn._hide();
-			});
-		},
-
-		// 目录滚动
-		bindIndexsScroll: function() {
-			new iScroll('index_wrapper', {});
-		},
-	
 		// 设定当前页面到指定页数
 		setPage: function(page) {
-			var self = this;
-			var left = 0 - page * (self.SCREEN_WIDTH + self.SCREEN_COLUMN_GAP);
-			if ($.browser.webkit) { // firefox for develop
-				//left = left + (page - 1) * self.SCREEN_PADDING * 2;
-			}
-			//self.$chapter.css('left', left + 'px'); 效率低
-			self.$chapter.css('-webkit-transform','translate3d(' + left + 'px, 0, 0)'); // 硬件加速
-			self.$chapter.css('-moz-transform','translate3d(' + left + 'px, 0, 0)');
-
-		},
-
-		setChapter: function(html) {
-			this.$temp.html(html);
-			this.$content.children().remove();
-			this.$content.append(this.$temp.children());
-			//this.$content.children().first().remove();
-			this.$chapter = $(this.CHAPTER_SELECTOR);
+			this.content.setPage(page);
 		},
 
 		// 获取章节总页码
 		getPageCount: function() {
-			return ($('.chapter *').last().offset().left - this.SCREEN_PADDING) / (this.SCREEN_WIDTH + this.SCREEN_COLUMN_GAP) + 1;
+			return this.content.getPageCount();
 		}
 	};
 
-	window.AppUi = AppUi;
+	window.shiu.ui.AppUi = AppUi;
 })();
 
+// 侧边栏
+(function() {
+	var Sidebar = {
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.ui = ui;
+			self.$indexs = $('#indexs');
+			self.initIndexs();
+			self.bindTouchStart();
+			self.bindAClick();
+			return self;
+		},
+
+		initIndexs: function() {
+			var self = this;
+			self.ui.$temp.html(self.ui.app.book.getIndexsHtml());
+			self.$indexs.append(self.ui.$temp.children());
+		},
+
+		// 目录滚动
+		bindIndexsScroll: function() {
+			this.iScroll = new iScroll('index_wrapper', {});
+		},
+
+		fadeX: function(x) {
+			this.$.css('-webkit-transform','translate3d(' + x + 'px, 0, 0)');
+			this.$.css('-moz-transform','translate3d(' + x + 'px, 0, 0)');
+		},
+
+		hide: function() { // TODO 设计成分状态隐藏
+			this.fadeX(0);
+			this.$.css('background', 'none');
+		},
+
+		show: function() {
+			if (this.iScroll === undefined) {
+				this.bindIndexsScroll(); // 延迟绑定
+			}
+			this.fadeX(320);
+			this.$.css('background', 'transparent');
+		},
+
+		isVisiable: function() {
+			return this.$.offset().left >= 0;
+		},
+
+		toggle: function() {
+			if (this.isVisiable()) {
+				this.hide();
+			} else {
+				this.show();
+			}
+		},
+
+		bindTouchStart: function() {
+			var self = this;
+			self.$.bind('touchstart', function(e) {
+				if (e.touches[0].clientX - self.$.offset().left > 280) {
+					self.hide();
+					return false;
+				}
+			});
+		},
+
+		bindAClick: function() {
+			var self = this;
+			self.$.find('#indexs li a').click(function(e) {
+				self.ui.app.book.setCurrentChapterIndex(parseInt(this.rel, 10));
+				self.ui.app.setChapter();
+				self.hide();
+				}
+			);
+		},
+
+	};
+
+	window.shiu.ui.Sidebar = Sidebar;
+})();
+
+// 目录菜单按钮
+(function() {
+	var IndexBtn = {
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.ui = ui;
+			self.bindTouchStart();
+			return self;
+		},
+
+		hide: function() {
+			this.ui.sidebar.hide();
+		},
+
+		show: function() {
+			this.ui.sidebar.fadeX(40);
+		},
+
+		isVisiable: function() {
+			// Mozilla 这时 left 会误判
+			return this.ui.sidebar.$.offset().left >= -280;
+		},
+
+		toggle: function() {
+			if (this.isVisiable()){
+				this.hide();
+			} else {
+				this.show();
+			}
+		},
+
+		bindTouchStart: function() {
+			var self = this;
+			self.$.bind('touchstart', function(e) {
+				self.ui.sidebar.toggle();
+				e.stopPropagation();
+				return false;
+			});
+		},
+
+		bindDragEnd: function() { // TODO 暂时不用
+			var self = this;
+			self.$.ondragend = function(e) {
+				self.ui.sidebar.show();
+			};
+		},
+
+	};
+
+	window.shiu.ui.IndexBtn = IndexBtn;
+})();
+
+// 书籍内容模块 Content
+(function() {
+	var Content = {
+
+		CHAPTER_SELECTOR: '#content .chapter',
+
+		init: function(selector, ui) {
+			var self = this;
+			self.$ = $(selector);
+			self.$chapter = $(selector).find('.chapter');
+			self.ui = ui;
+			self.isTouchEvent = false;
+			self.isTouchLock = false;
+			self.bindClick();
+			return self;
+		},
+
+		bindClick: function() {
+			var self= this;
+			self.$.click(function(e){
+				var x = e.clientX;
+				var y = e.clientY;
+				if (!self.isTouchEvent) {
+					if (x < 100) {
+						self.ui.app.prePage();
+						self.ui.indexBtn.hide();
+					} else if (x > 220) {
+						self.ui.app.nextPage();
+						self.ui.indexBtn.hide();
+					} else {
+						self.ui.indexBtn.toggle();
+					}
+				}
+			});
+		},
+
+		bindScroll: function() {
+			var self = this;
+			//new iScroll('content_wrapper', {
+				//hScroll: true,
+				//vScroll: true,
+			//});
+
+			self.$.bind('touchstart', function(e) {
+				self.startX = e.touches[0].pageX;
+				self.startLeft = self.$chapter.offset().left;
+			});
+
+			self.$.bind('touchmove', function(e) {
+				if (self.isTouchLock) { // 锁住
+					return false;
+				}
+				self.isTouchLock = true;
+				if (e.touches.length > 1) {
+					return false;
+				}
+				self.transformX(self.startLeft
+					- self.startX + e.touches[0].pageX);
+				self.isTouchLock = false;
+				//console.log('move: ' + e.touches[0].pageX);
+			});
+
+			self.$.bind('touchend', function(e) {
+				var offset = e.changedTouches[0].pageX - self.startX;
+				self.isTouchEvent = true;
+				if (offset < 0 && Math.abs(offset) >= 60) {
+					if (!self.ui.app.nextPage()) { // 判断是否有下一章
+						self.transformX(self.startLeft);
+					}
+				} else if (offset > 0 && Math.abs(offset) >= 60) {
+					if (!self.ui.app.prePage()) {
+						self.transformX(self.startLeft);
+					}
+				} else {
+					if (Math.abs(offset) < 10) { // 单击事件
+						self.isTouchEvent = false;
+					} 
+					self.transformX(self.startLeft); // 回退
+				}
+			});
+
+			self.$.bind('touchcancel', function(e) {
+				self.transformX(self.startLeft);
+				return false;
+			});
+		},
+
+		transformX: function(x) {
+			this.$chapter.css('-webkit-transform','translate3d(' +
+				x + 'px, 0, 0)'); // 硬件加速
+			this.$chapter.css('-moz-transform','translate3d(' +
+				x + 'px, 0, 0)');
+		},
+
+		setChapter: function(html) {
+			var self = this;
+			self.ui.app.info('载入中…', true);
+			self.ui.$temp.html(html);
+			self.$.children().remove();
+			self.$.append(self.ui.$temp.children());
+			self.$chapter = $(self.CHAPTER_SELECTOR);
+		},
+
+		setPage: function(page) {
+			var self = this;
+			var left = 0 - page *
+				(self.ui.SCREEN_WIDTH + self.ui.SCREEN_COLUMN_GAP);
+			self.transformX(left);
+		},
+
+		getPageCount: function() {
+			return (this.$chapter.children().last().offset().left -
+				this.ui.SCREEN_PADDING) / (
+					this.ui.SCREEN_WIDTH + this.ui.SCREEN_COLUMN_GAP
+				) + 1;
+		}
+
+	};
+
+	window.shiu.ui.Content = Content;
+})();
