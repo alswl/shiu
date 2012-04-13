@@ -170,6 +170,12 @@ http://127.0.0.1:9999/jiangye/
 来转换文本格式。
 运行 `./manager.py --help` 可以查看到帮助。
 
+=== JSLint ===
+
+使用 JSLint 来控制 Javascript 质量。
+
+* http://www.jslint.com/
+
 === 调试工具 ===
 
 Chrome 隐身模式。
@@ -193,6 +199,7 @@ iPhone Safari 调试控制台
 
 == 参考资料 ==
 
+* http://www.html5rocks.com/en/tutorials/[HTML5 Rocks]
 * http://sixrevisions.com/web-development/html5-iphone-app/[How to Make an HTML5 iPhone App]
 * http://mobilehtml5.org/[智能手机和平板中默认浏览器对HTML5和CSS3新技术的支持情况]
 * http://www.html5rocks.com/en/mobile/mobifying/["Mobifying" Your HTML5 Site]
