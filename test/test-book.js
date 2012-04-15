@@ -7,16 +7,19 @@
 			bookJson = window.book,
 			book;
 
-		module('Chapter');
-		book = s.model.Book.init(bookJson);
+		module('Book');
+		book = Object.create(s.model.Book.init(bookJson));
 
 		test('测试 Book 本地存储', function () {
 			ok(book.getCurrentPage() !== undefined);
-			book.setCurrentPage(100);
-			equal(book.getCurrentPage(), 100);
 
 			book.setPageCount(200);
 			equal(book.getPageCount(), 200);
+
+			book.setCurrentPage(10);
+			equal(book.getCurrentPage(), 10);
+			book.setCurrentPage(300);
+			equal(book.getCurrentPage(), 0);
 
 			equal(book.getCurrentChapterIndex(), 0);
 			book.setCurrentChapterIndex(10);

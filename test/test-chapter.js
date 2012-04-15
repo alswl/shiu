@@ -7,7 +7,7 @@
 			chapter;
 
 		module('Chapter');
-		chapter = s.model.Chapter.init('标题', '内容1\n内容2\r内容3', 2);
+		chapter = Object.create(s.model.Chapter).init('标题', '内容1\n内容2\r内容3', 2);
 		test('测试章节转换', function () {
 			equal(chapter.get$(), '<section class="chapter">\n' +
 				'<h2>第三章 标题</h2>\n' +

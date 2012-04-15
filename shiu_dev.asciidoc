@@ -170,6 +170,12 @@ http://127.0.0.1:9999/jiangye/
 来转换文本格式。
 运行 `./manager.py --help` 可以查看到帮助。
 
+=== QUnit ===
+
+jQuery 团队出的 JavaScript 单元测试工具。
+
+* http://docs.jquery.com/QUnit
+
 === JSLint ===
 
 使用 JSLint 来控制 Javascript 质量。
