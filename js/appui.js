@@ -295,10 +295,6 @@
 
 		bindScroll: function () {
 			var self = this;
-			//new iScroll('content_wrapper', {
-				//hScroll: true,
-				//vScroll: true,
-			//});
 
 			self.$.bind('touchstart', function (e) {
 				self.startX = e.touches[0].pageX;
