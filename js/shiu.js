@@ -8,7 +8,7 @@ $(function () {
 	if (DEBUG && DEBUG_MODE === 'standalone') {
 		window.navigator.standalone = true;
 	}
-	if (DEBUG && !window.shiu.util.isIphone()) {
+	if (DEBUG && !window.shiu.util.isMobile()) {
 		element = document.createElement("script");
 		element.type = "text/javascript";
 		element.src = '../js/phantom-limb.js';

@@ -38,6 +38,20 @@
 			return page;
 		},
 
+		setFontSize: function (size) {
+			var self = this;
+			self.db.set(self.title + '_font_size', size);
+		},
+
+		getFontSize: function () {
+			var self = this,
+				size = self.db.get(self.title + '_font_size');
+			if (size === null) {
+				size = 16;
+			}
+			return size;
+		},
+
 		// 总页数保存到本地
 		setPageCount: function (page) {
 			var self = this;

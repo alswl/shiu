@@ -17,6 +17,7 @@
 				self.$Template = '<section class="chapter">\n' +
 					'<h2>{title}</h2>\n' +
 					'{contents}\n' +
+					'<span class="end"></span>\n' +
 					'</section>';
 				contentHtml = '';
 				for (i = 0; i < self.content.split('\r').length; i += 1) {
