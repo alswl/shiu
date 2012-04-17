@@ -140,6 +140,10 @@
 				(navigator.userAgent.match(/iPod/i)) ||
 				(navigator.userAgent.match(/iPad/i)) ||
 				(navigator.userAgent.match(/Android/i));
+		},
+
+		isAndroid: function () {
+			return navigator.userAgent.match(/Android/i);
 		}
 
 	};
