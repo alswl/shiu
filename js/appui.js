@@ -52,7 +52,8 @@
 		},
 
 		// 设定横屏 / 适应尺寸 // TODO
-		setScreen: function () {
+		setScreen: function (isOrientation) {
+			isOrientation = isOrientation || false;
 			var x = window.screen.width,
 				y = document.body.scrollHeight;
 			//$('#body').css('width', x + 'px');
@@ -65,8 +66,13 @@
 			//$('#main').css('height', y + 'px');
 			//$('#index').css('height', y + 'px');
 			//$('#content').css('height', y + 'px');
-			this.SCREEN_WIDTH = x;
-			this.SCREEN_HEIGHT = y;
+			if (isOrientation) {
+				this.SCREEN_WIDTH = y;
+				this.SCREEN_HEIGHT = x;
+			} else {
+				this.SCREEN_WIDTH = x;
+				this.SCREEN_HEIGHT = y;
+			}
 			//this.setPage(0);
 		},
 

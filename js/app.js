@@ -103,10 +103,10 @@
 
 		// 绑定横屏
 		bindOrientate: function () {
-			var self = this;
+			var self = this, isOrientation = false;
 			window.addEventListener("orientationchange", function (e) {
-				e.preventDefault();
-				if (Math.abs(window.orientation) === 90) {
+				if (Math.abs(window.orientation) !== 0) {
+					//isOrientation = true;
 					self.error('人家还不会横屏处理啦，等以后的版本吧', true);
 				}
 			}, false);
