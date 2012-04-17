@@ -9,14 +9,16 @@
 		$temp: $('#temp'),
 		CHAPTER_SELECTOR: '#content .chapter',
 		$chapter: null, // 章 dom节点，修改后需要重新载入
-		SCREEN_WIDTH: 320,
-		SCREEN_HEIGHT: 480,
+		SCREEN_WIDTH: 320, // 默认宽度
+		SCREEN_HEIGHT: 480, // 默认高度
 		SCREEN_PADDING: 8,
-		SCREEN_COLUMN_GAP: 12,
+		SCREEN_BOTTOM_HEIGHT: 10,
+		SCREEN_COLUMN_GAP: 12, // 默认分栏页面间隔
 
         init: function (app) {
 			var self = this;
 			self.app = app;
+			self.setScreen();
 		},
 
 		// 浏览模式
@@ -52,20 +54,20 @@
 		// 设定横屏 / 适应尺寸 // TODO
 		setScreen: function () {
 			var x = window.screen.width,
-				y = window.screen.height;
-			$('#body').css('width', x + 'px');
-			$('#main').css('width', x + 'px');
-			$('#index').css('width', x + 'px');
-			$('#content .chapter').css('width', x + 'px');
-			$('#content .chapter').css('-moz-column-width', x + 'px');
-			$('#content .chapter').css('-webkit-column-width', x + 'px');
-			$('#body').css('height', y + 'px');
-			$('#main').css('height', y + 'px');
-			$('#index').css('height', y + 'px');
-			$('#content').css('height', y + 'px');
+				y = document.body.scrollHeight;
+			//$('#body').css('width', x + 'px');
+			//$('#main').css('width', x + 'px');
+			//$('#index').css('width', x + 'px');
+			//$('#content .chapter').css('width', x + 'px');
+			//$('#content .chapter').css('-moz-column-width', x + 'px');
+			//$('#content .chapter').css('-webkit-column-width', x + 'px');
+			//$('#body').css('height', y + 'px');
+			//$('#main').css('height', y + 'px');
+			//$('#index').css('height', y + 'px');
+			//$('#content').css('height', y + 'px');
 			this.SCREEN_WIDTH = x;
 			this.SCREEN_HEIGHT = y;
-			this.setPage(0);
+			//this.setPage(0);
 		},
 
 		// 更新下载百分比
@@ -133,6 +135,7 @@
 			self.initIndexs();
 			self.bindTouchStart();
 			self.bindAClick();
+			$('#index_wrapper').css('height', (self.ui.SCREEN_HEIGHT) + 'px');
 			return self;
 		},
 
@@ -280,10 +283,10 @@
 				var x = e.clientX,
 					y = e.clientY;
 				if (!self.isTouchEvent) {
-					if (x < 100) {
+					if (x < self.ui.SCREEN_WIDTH * 0.25) {
 						self.ui.app.prePage();
 						self.ui.indexBtn.hide();
-					} else if (x > 220) {
+					} else if (x > self.ui.SCREEN_WIDTH * 0.75) {
 						self.ui.app.nextPage();
 						self.ui.indexBtn.hide();
 					} else {
@@ -354,6 +357,9 @@
 			self.$.children().remove();
 			self.$.append(self.ui.$temp.children());
 			self.$chapter = $(self.CHAPTER_SELECTOR);
+			self.$chapter.css('height',
+				(self.ui.SCREEN_HEIGHT - self.ui.SCREEN_BOTTOM_HEIGHT) + 'px');
+			self.$chapter.css('-webkit-column-width', self.ui.SCREEN_WIDTH + 'px');
 		},
 
 		setPage: function (page) {
