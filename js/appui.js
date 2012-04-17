@@ -268,11 +268,12 @@
 
 		init: function (selector, ui) {
 			var self = this;
+			self.ui = ui;
 			self.$ = $(selector);
 			self.$chapter = $(selector).find('.chapter');
-			self.ui = ui;
 			self.isTouchEvent = false;
 			self.isTouchLock = false;
+			self.$.css('height', self.ui.SCREEN_HEIGHT + 'px');
 			self.bindClick();
 			return self;
 		},
