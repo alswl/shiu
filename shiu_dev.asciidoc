@@ -116,6 +116,16 @@ iScroll 需要延迟加载。
 * http://www.html5rocks.com/en/mobile/touch/
 * https://dvcs.w3.org/hg/webevents/raw-file/tip/touchevents.html[Touch Events version 2 - W3C]
 * http://developer.apple.com/library/safari/#documentation/UserExperience/Reference/TouchEventClassReference/TouchEvent/TouchEvent.html#//apple_ref/doc/uid/TP40009358[TouchEvent Class Reference]
+* http://www.mobilexweb.com/blog/ios-5-iphone-and-ipad-html5[Safari on iOS 5, HTML5 evolution for iPhone and iPad]
+* http://johanbrook.com/browsers/native-momentum-scrolling-ios-5/[Native style momentum scrolling to arrive in iOS 5]
+
+=== iPad 适应 ===
+
+苦逼的模糊
+
+
+* http://stackoverflow.com/questions/4641522/how-to-force-re-render-after-a-webkit-3d-transform-in-safari[How to force re-render after a WebKit 3D transform in Safari]
+* http://css-tricks.com/forums/discussion/11482/blurry-image-on-transform-scale/p1[Blurry Image on transform: scale]
 
 == JS ==
 
@@ -170,6 +180,18 @@ http://127.0.0.1:9999/jiangye/
 来转换文本格式。
 运行 `./manager.py --help` 可以查看到帮助。
 
+=== QUnit ===
+
+jQuery 团队出的 JavaScript 单元测试工具。
+
+* http://docs.jquery.com/QUnit
+
+=== JSLint ===
+
+使用 JSLint 来控制 Javascript 质量。
+
+* http://www.jslint.com/
+
 === 调试工具 ===
 
 Chrome 隐身模式。
@@ -193,6 +215,7 @@ iPhone Safari 调试控制台
 
 == 参考资料 ==
 
+* http://www.html5rocks.com/en/tutorials/[HTML5 Rocks]
 * http://sixrevisions.com/web-development/html5-iphone-app/[How to Make an HTML5 iPhone App]
 * http://mobilehtml5.org/[智能手机和平板中默认浏览器对HTML5和CSS3新技术的支持情况]
 * http://www.html5rocks.com/en/mobile/mobifying/["Mobifying" Your HTML5 Site]

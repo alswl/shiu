@@ -73,8 +73,8 @@ body {
 	margin: 0;
 	overflow: hidden;
 	padding: 0;
-	width: 320px;
-	height: 460px;
+	/*width: 320px;*/
+	/*height: 460px;*/
 }
 footer {
 	width: 100%;
@@ -156,14 +156,14 @@ body {
 }
 
 #main {
-	width: 320px;
-	height: 460px;
+	/*width: 320px;*/
+	/*height: 460px;*/
 }
 #sidebar {
 	position: absolute;
 	left: -320px;
 	width: 320px;
-	height: 460px;
+	/*height: 460px;*/
 	z-index: 200;
 	/*background: transparent;*/
 	-moz-transition: all 200ms ease-out;
@@ -179,7 +179,7 @@ body {
 #index_wrapper {
 	position:relative; 
 	width: 100%;
-	height: 460px;
+	/*height: 460px; */ /* 必须程序设定 */
 	overflow: hidden;
 }
 #sidebar .wrapper #indexs {
@@ -209,12 +209,18 @@ body {
 #sidebar .wrapper .copyright a {
 	color: #fff;
 }
-#sidebar .btn {
+#sidebar .btns {
+	float: left;
+}
+#sidebar .buttons {
+	top: 250px;
 	position: relative;
 	float: left;
+}
+#sidebar .btn {
 	width: 30px;
-	height: 50px;
-	line-height: 50px;
+	height: 40px;
+	line-height: 40px;
 	padding: 4px;
 	font-size: 20px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -222,14 +228,21 @@ body {
 	border-radius: 0 6px 6px 0;
 }
 #sidebar .index_btn {
-	top: 250px;
+	background:  #00ADEE;
+    border: 1px solid #0076A3;
+}
+#sidebar .font_zi_btn {
+	background:  #00ADEE;
+    border: 1px solid #0076A3;
+}
+#sidebar .font_zo_btn {
 	background:  #00ADEE;
     border: 1px solid #0076A3;
 }
 
 #content {
 	width: auto;
-	height: 460px;
+	/*height: 460px;*/
 	z-index: 100;
 }
 #content .chapter h2 {
@@ -237,23 +250,20 @@ body {
 	font-size: 1.4em;
 }
 #content .chapter {
-    height: 440px;
+    /*height: 440px;*/ /* 必须在程序设定 */
     position: absolute;
 	left: 0px;
-    -moz-column-width: 320px;
-    -moz-column-gap: 12px;
-	-moz-column-count: auto;
-    -webkit-column-width: 320px;
-    -webkit-column-gap: 12px;
-	-webkit-column-count: auto;
-	-moz-transition: all 300ms ease-out;
+	/*-webkit-column-width: 320px;*/
+	-webkit-column-gap: 12px;
+	/*-webkit-column-count: auto;*/
 	-webkit-transition: all 300ms ease-out;
 }
 #content .chapter * {
-	width: 304px;
+	/*width: 304px;*/
 	margin: 0 8px;
 }
 #content p {
 	font-size: 1.2em;
 	text-indent: 2em;
+	line-height: 1.6em;
 }
