@@ -22,7 +22,7 @@
 				self.error('请在iPhone/iPod Touch打开');
 			} else {
 				// 以独立应用打开
-				if (window.navigator.standalone ||
+				if (window.navigator.standalone || window.shiu.util.isAndroid() ||
 						(window.shiu.DEBUG === true && window.shiu.DEBUG_MODE === 'standalone')) {
 					if (!self.loadBook()) { // 书籍不存在
 						self.error('书籍数据不存在，开始重新下载');
