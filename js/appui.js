@@ -38,7 +38,7 @@
 				e.preventDefault();
 			});
 			self.sidebar = Object.create(p.Sidebar).init('#sidebar', self);
-			self.indexBtn = Object.create(p.IndexBtn).init('#sidebar .index_btn', self);
+			self.buttons = Object.create(p.Buttons).init('#sidebar .buttons', self);
 			self.content = Object.create(window.shiu.ui.Content).init('#content', self);
 			self.$heroUnit.one('click', function () {
 				self.app.startRead();
@@ -56,16 +56,6 @@
 			isOrientation = isOrientation || false;
 			var x = window.screen.width,
 				y = document.body.scrollHeight;
-			//$('#body').css('width', x + 'px');
-			//$('#main').css('width', x + 'px');
-			//$('#index').css('width', x + 'px');
-			//$('#content .chapter').css('width', x + 'px');
-			//$('#content .chapter').css('-moz-column-width', x + 'px');
-			//$('#content .chapter').css('-webkit-column-width', x + 'px');
-			//$('#body').css('height', y + 'px');
-			//$('#main').css('height', y + 'px');
-			//$('#index').css('height', y + 'px');
-			//$('#content').css('height', y + 'px');
 			if (isOrientation) {
 				this.SCREEN_WIDTH = y;
 				this.SCREEN_HEIGHT = x;
@@ -210,14 +200,17 @@
 	window.shiu.ui.Sidebar = Sidebar;
 }());
 
-// 目录菜单按钮
+// 菜单按钮
 (function () {
 	'use strict';
-	var IndexBtn = {
+	var Buttons = {
 
 		init: function (selector, ui) {
 			var self = this;
 			self.$ = $(selector);
+			self.$index = $(selector).children('.index_btn');
+			self.$fontZi = $(selector).children('.font_zi_btn');
+			self.$fontZo = $(selector).children('.font_zo_btn');
 			self.ui = ui;
 			self.bindTouchStart();
 			return self;
@@ -246,8 +239,18 @@
 
 		bindTouchStart: function () {
 			var self = this;
-			self.$.bind('touchstart', function (e) {
+			self.$index.bind('touchstart', function (e) {
 				self.ui.sidebar.toggle();
+				e.stopPropagation();
+				return false;
+			});
+			self.$fontZi.bind('touchstart', function (e) {
+				self.ui.content.incFontSize();
+				e.stopPropagation();
+				return false;
+			});
+			self.$fontZo.bind('touchstart', function (e) {
+				self.ui.content.decFontSize();
 				e.stopPropagation();
 				return false;
 			});
@@ -255,14 +258,14 @@
 
 		bindDragEnd: function () { // TODO 暂时不用
 			var self = this;
-			self.$.ondragend = function (e) {
+			self.$index.ondragend = function (e) {
 				self.ui.sidebar.show();
 			};
 		}
 
 	};
 
-	window.shiu.ui.IndexBtn = IndexBtn;
+	window.shiu.ui.Buttons = Buttons;
 }());
 
 // 书籍内容模块 Content
@@ -292,12 +295,12 @@
 				if (!self.isTouchEvent) {
 					if (x < self.ui.SCREEN_WIDTH * 0.25) {
 						self.ui.app.prePage();
-						self.ui.indexBtn.hide();
+						self.ui.buttons.hide();
 					} else if (x > self.ui.SCREEN_WIDTH * 0.75) {
 						self.ui.app.nextPage();
-						self.ui.indexBtn.hide();
+						self.ui.buttons.hide();
 					} else {
-						self.ui.indexBtn.toggle();
+						self.ui.buttons.toggle();
 					}
 				}
 			});
@@ -367,6 +370,7 @@
 			self.$chapter.css('height',
 				(self.ui.SCREEN_HEIGHT - self.ui.SCREEN_BOTTOM_HEIGHT) + 'px');
 			self.$chapter.css('-webkit-column-width', self.ui.SCREEN_WIDTH + 'px');
+			self.$chapter.children('p').css('font-size', self.ui.app.book.getFontSize());
 		},
 
 		setPage: function (page) {
@@ -376,10 +380,34 @@
 		},
 
 		getPageCount: function () {
-			return (this.$chapter.children().last().offset().left -
-				this.ui.SCREEN_PADDING)
+			return ((this.$chapter.find('.end').offset().left -  this.$chapter.children().first().offset().left))
 					/ (this.ui.SCREEN_WIDTH + this.ui.SCREEN_COLUMN_GAP)
 					+ 1;
+		},
+
+		incFontSize: function () {
+			var self = this,
+				size = parseInt(self.$chapter.children('p').css('font-size'), 10);
+			if (size < 32) {
+				self.$chapter.children('p').css('font-size', (size + 2) + 'px');
+			}
+			self.ui.app.book.setPageCount(self.getPageCount());
+			self.ui.app.book.setFontSize(size);
+		},
+
+		decFontSize: function () {
+			var self = this,
+				size = parseInt(self.$chapter.children('p').css('font-size'), 10);
+			if (size > 12) {
+				self.$chapter.children('p').css('font-size', (size - 2) + 'px');
+			}
+			self.ui.app.book.setPageCount(self.getPageCount());
+			self.ui.app.book.setFontSize(size);
+			
+			// 过载保护
+			if (self.ui.app.book.getPageCount() <= self.ui.app.book.getCurrentPage()) {
+				self.ui.app.prePage();
+			}
 		}
 
 	};

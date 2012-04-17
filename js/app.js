@@ -18,7 +18,7 @@
 		run: function () {
 			var self = this, book;
 			self.ui.displayHeroUnit();
-			if (!window.shiu.util.isIphone() && !window.shiu.DEBUG) { // 非 iOS 打开
+			if (!window.shiu.util.isMobile() && !window.shiu.DEBUG) { // 非 iOS 打开
 				self.error('请在iPhone/iPod Touch打开');
 			} else {
 				// 以独立应用打开

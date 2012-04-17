@@ -209,12 +209,18 @@ body {
 #sidebar .wrapper .copyright a {
 	color: #fff;
 }
-#sidebar .btn {
+#sidebar .btns {
+	float: left;
+}
+#sidebar .buttons {
+	top: 250px;
 	position: relative;
 	float: left;
+}
+#sidebar .btn {
 	width: 30px;
-	height: 50px;
-	line-height: 50px;
+	height: 40px;
+	line-height: 40px;
 	padding: 4px;
 	font-size: 20px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -222,7 +228,14 @@ body {
 	border-radius: 0 6px 6px 0;
 }
 #sidebar .index_btn {
-	top: 250px;
+	background:  #00ADEE;
+    border: 1px solid #0076A3;
+}
+#sidebar .font_zi_btn {
+	background:  #00ADEE;
+    border: 1px solid #0076A3;
+}
+#sidebar .font_zo_btn {
 	background:  #00ADEE;
     border: 1px solid #0076A3;
 }
@@ -252,4 +265,5 @@ body {
 #content p {
 	font-size: 1.2em;
 	text-indent: 2em;
+	line-height: 1.6em;
 }
