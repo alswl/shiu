@@ -1,7 +1,7 @@
 $(function () {
 	'use strict';
 
-	var DEBUG = false,
+	var DEBUG = true,
 		//DEBUG_MODE = 'normal', // normal / standalone
 		DEBUG_MODE = 'standalone', // normal / standalone
 		element;
