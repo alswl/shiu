@@ -88,7 +88,7 @@
 				i;
 			for (i = 0; i < self.chapters.length; i += 1) {
 				html += '<li><a href="javascript:;" rel="' + i + '">' +
-					self.chapters[i].getCnIndex() + self.chapters[i].title +
+					self.chapters[i].getCnIndex() + ' ' + self.chapters[i].title +
 					'</a></li>';
 			}
 			return html;
