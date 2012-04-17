@@ -1,19 +1,19 @@
 CACHE MANIFEST
 
-# Cache Manifest Version: 2310
+# Cache Manifest Version: 20120417
 
 CACHE:
 
-../js/zepto.js
-../js/iscroll.js
-#../js/common.js
-#../js/chapter.js
-#../js/book.js
-#../js/appui.js
-#../js/app.js
-#../js/shiu.js
+../js/zepto.min.js
+../js/iscroll.min.js
+../js/common.min.js
+../js/chapter.min.js
+../js/book.min.js
+../js/appui.min.js
+../js/app.min.js
+../js/shiu.min.js
 
-#../style/style.css
+../style/style.min.css
 
 ../image/cover.png
 ../image/side_bg.png
