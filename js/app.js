@@ -18,8 +18,8 @@
 		run: function () {
 			var self = this, book;
 			self.ui.displayHeroUnit();
-			if (!window.shiu.util.isMobile() && !window.shiu.DEBUG) { // 非 iOS 打开
-				self.error('请在iPhone/iPod Touch打开');
+			if (!(window.shiu.util.isMobile() && $.browser.webkit) && !window.shiu.DEBUG) { // 非 iOS 打开
+				self.error('请在iPhone/iPad/iPod Touch打开');
 			} else {
 				// 以独立应用打开
 				if (window.navigator.standalone || window.shiu.util.isAndroid() ||
