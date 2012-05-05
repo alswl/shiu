@@ -37,7 +37,7 @@ http://davidbcalhoun.com/2010/viewport-metatag[The viewport metatag (Mobile web 
 * iOS 特有标签查看
 http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/MetaTags.html[Apple-Specific Meta Tag Keys]
 
-`apple-mobile-web-app-capable` 模式下的点击阴影，使用
+* apple-mobile-web-app-capable: 模式下的点击阴影，使用
 `-webkit-tap-highlight-color: rgba(0,0,0,0);` 消除
 
 * http://stackoverflow.com/a/9784399/342757
@@ -122,7 +122,6 @@ iScroll 需要延迟加载。
 === iPad 适应 ===
 
 苦逼的模糊
-
 
 * http://stackoverflow.com/questions/4641522/how-to-force-re-render-after-a-webkit-3d-transform-in-safari[How to force re-render after a WebKit 3D transform in Safari]
 * http://css-tricks.com/forums/discussion/11482/blurry-image-on-transform-scale/p1[Blurry Image on transform: scale]
