@@ -22,6 +22,15 @@ Shiu (/ʃʐy/)，中文音标 (shi rü))，是一款基于 WebApp 的阅读应�
 1. 修改 `index.html` 将书籍链接加到对应地方
 1. 运行命令 `manager.py --serve` 即可在本地启动服务
 
+## 幻灯片 ##
+
+我曾经拿 Shiu 的开发过程做过一次小分享，幻灯片已经上传放到 `slide` 目录，
+可以用来参考。
+
 更多开发信息可以查看 [开发记录](https://github.com/alswl/shiu/blob/master/shiu_dev.asciidoc)
+
+## Licenses ##
+
+[MIT License](http://www.opensource.org/licenses/MIT)
 
 This project is maintained by [@alswl](http://log4d.com).
