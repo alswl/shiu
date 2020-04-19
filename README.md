@@ -29,6 +29,10 @@ Shiu (/ʃʐy/)，中文音标 (shi rü))，是一款基于 WebApp 的阅读应�
 
 更多开发信息可以查看 [开发记录](https://github.com/alswl/shiu/blob/master/shiu_dev.asciidoc)
 
+## Snapshots
+
+![see](./snapshots/)
+
 ## Licenses ##
 
 [MIT License](http://www.opensource.org/licenses/MIT)
