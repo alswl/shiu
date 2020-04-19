@@ -31,7 +31,7 @@ Shiu (/ʃʐy/)，中文音标 (shi rü))，是一款基于 WebApp 的阅读应�
 
 ## Snapshots
 
-![see](./snapshots/)
+[see](./snapshots/)
 
 ## Licenses ##
 
